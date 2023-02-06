@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import StarIcon from '@heroicons/vue/24/solid/StarIcon'
+import type { MediaType } from '~~/types';
 
 
 const route = useRoute()
 
-const idMovie = computed(() => route.params.idMovie as string)
+const id = computed(() => route.params.id as string)
+const typeMedia = computed(() => route.params.type as MediaType || 'movie')
 
 const [item, recommendations] = await Promise.all([
-    getMedia('movie', idMovie.value),
-    getRecommendations('movie', idMovie.value),
+    getMedia(typeMedia.value, id.value),
+    getRecommendations(typeMedia.value, id.value),
 ])
-// const item = await getMedia('movie', idMovie.value) 
-// co
+
 
 const creditsList = computed(() => {
     return item.credits?.cast.slice(0, 4)
@@ -53,10 +54,10 @@ useHead({
                     <div class="movie__content__info ml-6">
                         <div class="movie__content__info--left">
                             <div class="movie__other text-sm text-gray-300 font-light">
-                                <span class="text-yellow-300">{{ item.release_date }}</span> / {{ item.status }}
+                                <span class="text-yellow-300">{{ item.release_date || item.first_air_date }}</span> / {{ item.status }}
                             </div>
                             <h2 class=" text-5xl font-medium font-oswald">
-                                {{ item.title }}
+                                {{ item.title || item.name}}
                             </h2>
                             <div class="genres-group flex gap-2 mt-3">
                                 <PublicChip v-for="genre in item.genres">{{ genre.name }}</PublicChip>
@@ -67,7 +68,7 @@ useHead({
                                     :charecters="credit.character" :id="credit.id" :name="credit.name"
                                     :photo="credit.profile_path" />
                             </div>
-                            <MoviePageRecommendationsMovies :items="recommendations.results" />
+                            <MoviePageRecommendationsMovies :items="recommendations.results" :type="typeMedia"/>
                         </div>
                         <div class="right">
                             <div class="raiting flex items-center gap-2">

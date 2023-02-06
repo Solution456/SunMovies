@@ -6,14 +6,12 @@ export const NAV_ROUTES = {
     },
     TVSHOWS:{
         name:'Tvshows',
-        to:'/Tvshows'
+        to:'/tv'
     },
-    
-}
-
-export const ROUTES = {
     MOVIE:{
-        name:'movie',
+        name:'Movie',
         to:'/movie'
-    },
+    }
+    
+    
 }

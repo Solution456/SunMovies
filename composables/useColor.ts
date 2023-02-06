@@ -64,6 +64,6 @@ export const useColor = (src:string) => {
     const img = image(src)
     const {R,G,B} = getColor(img,4)
 
-    return `rgb(${R},${G},${B})`
+    return computed(() => `rgb(${R},${G},${B})`)
 
 }

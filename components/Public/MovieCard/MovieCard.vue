@@ -1,15 +1,17 @@
 <script setup lang="ts">
 
 import PlayIcon from '@heroicons/vue/24/solid/PlayIcon'
-import {ROUTES} from '@/constants/routes' 
+import {NAV_ROUTES} from '@/constants/routes' 
 
 import type { Genre } from '~~/types';
 
+
 interface MovieCardProps {
+  type: 'tv' | 'movie'
   id: string | number,
   url: string,
   raiting?: string | number | null,
-  title: string,
+  title?: string,
   genres?: Genre[]
 }
 
@@ -46,7 +48,7 @@ const props = defineProps<MovieCardProps>()
             backdrop-blur-sm bg-white/30
             rounded-md
            w-full flex items-center">
-          <NuxtLink :to="`${ROUTES.MOVIE['to']}/${props.id}`"
+          <NuxtLink :to="`/${props.type}/${props.id}`"
             class="playButton p-4 flex-none h-full flex items-center justify-center border-r border-gray-300 border-opacity-40">
             <PlayIcon
               class="h-6 w-6 bg-white rounded-full text-yellow-300 p-1 hover:bg-black transition cursor-pointer" />
@@ -56,7 +58,7 @@ const props = defineProps<MovieCardProps>()
             class="information h-full flex justify-center items-center p-1 flex-1 border-r border-gray-300 border-opacity-40">
             <div class="wrap">
               <h4 class="information__name text-xs">
-                {{ props.title }}
+                {{ props.title}}
               </h4>
               <div class="information__gengre text-[0.65rem] font-light h-full flex flex-wrap ">
                 <span v-for="genre in props.genres" :key="genre.id" class="gengre__name">{{ genre.name }} &nbsp;</span>

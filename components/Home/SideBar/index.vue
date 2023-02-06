@@ -20,18 +20,10 @@ const mockData = [
 ];
 
 const scrollWrapper = ref<HTMLDivElement>()
-
-console.log('@@@@',scrollWrapper)
 useScrollbar(scrollWrapper)
 
 
 
-// const osOptions = {
-//     overflow: {
-//     x: 'scroll',
-//     y: 'scroll',
-//   }
-// }
 </script>
 
 

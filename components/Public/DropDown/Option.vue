@@ -44,7 +44,7 @@ const handleRadio = (event: HTMLInputEvent) => {
         :value=props.value
         :checked="checked"
         :disabled="disabled"
-        @input="handleRadio($event)"
+        @input="() => handleRadio"
         class="
           
           w-3

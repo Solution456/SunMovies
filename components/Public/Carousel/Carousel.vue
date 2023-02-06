@@ -29,7 +29,7 @@ const onSlideChange = () => {
 //Data Fetching
 const list = await getListMedia(props.query.type, props.query.query, 1)
 
-const genresList = await getGenreList('movie')
+const genresList = await getGenreList(props.query.type)
 
 const genresName = (genres:number[]):Genre[] => {
     const tmpArray:Genre[] = []
@@ -52,7 +52,7 @@ const genresName = (genres:number[]):Genre[] => {
     @slideChange="onSlideChange"
   >
     <swiper-slide v-for="item in list.results" :key="item.id">
-        <PublicMovieCard :id="item.id" :url="apiURL.imagePoster(item.poster_path)" :title="item.title" :raiting="item.vote_average" :genres="genresName(item.genre_ids)" />
+        <PublicMovieCard :id="item.id" :url="apiURL.imagePoster(item.poster_path)" :title="item.title || item.name" :raiting="item.vote_average" :type="props.query.type" :genres="genresName(item.genre_ids)" />
     </swiper-slide>
   </swiper>
 </template>

@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import StarIcon from '@heroicons/vue/24/solid/StarIcon'
+import type { MediaType } from '~~/types';
 
 const route = useRoute()
 
-const idMovie = computed(() => route.params.idMovie as string)
+const id = computed(() => route.params.id as string)
+const typeMedia = computed(() => route.params.type as MediaType || 'movie')
 
-const item = await getMedia('movie', idMovie.value) 
+const item = await getMedia(typeMedia.value, id.value) 
 </script>
 
 

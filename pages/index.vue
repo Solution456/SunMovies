@@ -10,12 +10,12 @@ const route = useRoute()
 const typeMedia = computed( () => route.params.type as MediaType || 'movie')
 
 
-const queries = computed(() => {
-    if (typeMedia.value === 'movie') {
-        return QUERY_LIST.movie
-    }
-    return QUERY_LIST.tv
-})
+const queries = computed(() => 
+    [
+        QUERY_LIST.movie[0],
+        QUERY_LIST.tv[0]
+    ]
+)
 
 const trending = await getTrending(typeMedia.value)
 
@@ -38,7 +38,7 @@ const trending = await getTrending(typeMedia.value)
                             </template>
                             <HomeBanner :item="trending.results[0]"/>
                         </ClientOnly>
-                    <HomeContentItem v-for="query in queries" :key="query.query" :query="query" :type-media="typeMedia"/>
+                    <HomeContentItem v-for="query in queries" :key="query.query" :query="query" :type-media="query.type"/>
                 </div>
             </div>
         </div>

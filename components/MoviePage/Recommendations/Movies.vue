@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { Media } from '~~/types';
+import type { Media, MediaType } from '~~/types';
 
 
 const props = defineProps<{
     items: Media[]
+    type:MediaType
 }>()
 
 const recommendationsList = computed(() => {
@@ -21,7 +22,7 @@ const recommendationsList = computed(() => {
         </div>
         <div class="recommendations__items flex gap-3 ">
             <div v-for="recommendation in recommendationsList" :key="recommendation.id" class="item">
-                <MoviePageRecommendationsCard  :id="recommendation.id" :PosterUrl="recommendation.poster_path" :title="recommendation.title"/>
+                <MoviePageRecommendationsCard  :item="recommendation" :type="props.type"/>
             </div>
             
         </div>
