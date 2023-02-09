@@ -1,5 +1,7 @@
 import {ofetch} from 'ofetch'
-import https from 'https';
+import https, { Agent } from 'https';
+import HttpsProxyAgent from 'https-proxy-agent'
+
 
 const httpsAgent = new https.Agent({
       rejectUnauthorized: false,
@@ -7,6 +9,7 @@ const httpsAgent = new https.Agent({
 
 
 const TMDB_API_URL = 'https://api.themoviedb.org/3'
+const TMDB_PROX = 'http://apitmdb.cub.watch/3/'
 
 const TEST_API = 'https://official-joke-api.appspot.com'
 
@@ -21,16 +24,28 @@ export default defineEventHandler( async (event) => {
         }
     )
 
+    
+    
     const config = useRuntimeConfig()
     
+    
+
+    const optionsFetch = {
+        
+        method:'GET',
+    }
+
+    
+
     try {
-        return await ofetch(event.context.params.path,{
-            
-            baseURL: TMDB_API_URL,
+
+        return await  ofetch(event.context.params.path,{
+            baseURL: TMDB_PROX,
             params: {
                 api_key: config.apiKey,
                 ...query
             }
+            
         })
     } 
     catch (e: any) {
