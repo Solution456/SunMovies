@@ -25,6 +25,9 @@ module.exports = {
     },
 
     extend: {
+      gridTemplateColumns: {
+        'search-item': '128px minmax(0,1fr)'
+      },
       colors: {
         bgColor: '#202020',
         gray: {

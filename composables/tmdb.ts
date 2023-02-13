@@ -65,3 +65,7 @@ export const getRecommendations = (type: MediaType, id:string, page=1): Promise<
 export const getTrending = (media: string, page = 1): Promise<PageResult<Media>> => {
   return fetchTMDB(`trending/${media}/week`, { page })
 }
+
+export const searchTMDB = (query: string, page = 1):Promise<PageResult<Media>> => {
+  return fetchTMDB(`search/multi`, {query,page})
+}
