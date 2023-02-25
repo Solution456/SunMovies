@@ -10,6 +10,8 @@ interface ContentItemProps {
 
 const props = defineProps<ContentItemProps>()
 
+const router = useRouter()
+
 
 const list = await getListMedia(props.typeMedia, props.query.query, 1)
 </script>
@@ -27,7 +29,7 @@ const list = await getListMedia(props.typeMedia, props.query.query, 1)
             </div>
 
             <div class="home_item__action h-full flex">
-                <HomeActionButton>More</HomeActionButton>
+                <HomeActionButton @click="router.push(`/${props.typeMedia}/query/${props.query.query}`)">More</HomeActionButton>
             </div>
         </div>
 

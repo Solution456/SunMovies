@@ -1,5 +1,7 @@
 export type MediaType = 'movie' | 'tv'
 
+export type MediaQueryType = 'popular' | 'top_rated' | 'upcoming' | 'now_playing' | 'airing_today'
+
 
 export interface Media {
     adult: boolean
