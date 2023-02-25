@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { NAV_ROUTES } from '@/constants/routes'
 
+
 interface navigationProps {
-    SearchActive: boolean
+    SearchActive: boolean,
 }
 
 const props = defineProps<navigationProps>()
-
 const emit = defineEmits<{
-    (e: 'ShowState'):void
+    (e: 'ShowState'):void,
+    (e: 'updateSearch', value:string):void
 
 }>()
+
 
 const links = [
     {
@@ -28,23 +30,29 @@ const links = [
 
 ]
 
+const search = ref('')
 
 const ShowActive = () => {
-    console.log('@@Click')
     emit('ShowState')
 }
+
+
+watch(search, () => {
+    emit('updateSearch',search.value)
+
+})
 
 
 
 </script>
 
 <template>
-    <div class="navigation fixed w-full bg-bgColor z-[120] left-0 top-0 h-14 border-b border-gray-600 mx-auto my-0">
+    <header class="navigation fixed w-full bg-bgColor z-[120] left-0 top-0 h-14 border-b border-gray-600 mx-auto px-1">
 
-        <header class="page_header w-[1076px] h-full max-w-full relative xs:mx-auto">
+        <div class="page_header w-full h-full  sm:max-w-[85%] relative sm:mx-auto">
 
 
-            <nav class="flex h-full items-center justify-between">
+            <nav class="flex h-full items-center xs:gap-0 gap-4 justify-between">
                 <div
                     class="navigation__logo font-poppins font-bold text-xl xs:text-lg flex items-center justify-center h-full">
                     <a :href="NAV_ROUTES.HOME['to']">s<span class=" text-yellow-300">u</span>n</a>
@@ -65,13 +73,11 @@ const ShowActive = () => {
                     </div>
                 </div>
 
-                {{ props.SearchActive }}
-
                 <!-- Search -->
                 <div v-if="props.SearchActive"
                     class="search-container max-w-[600px] m-auto flex flex-grow flex-shrink-0 basis-auto">
                     <div class="content flex-grow flex-shrink-0 basis-0 max-w-full">
-                        <PublicInput name="search" icon="search" />
+                        <PublicInput name="search" v-model="search"  icon="search" />
                     </div>
                 </div>
 
@@ -79,11 +85,11 @@ const ShowActive = () => {
 
 
                 <div class="navigation__actions flex items-center h-full">
-                    <NavigationActions @update="ShowActive"></NavigationActions>
+                    <NavigationActions :SearchActive="props.SearchActive" @update="ShowActive"></NavigationActions>
                 </div>
             </nav>
-        </header>
-    </div>
+        </div>
+    </header>
 
 </template>
 

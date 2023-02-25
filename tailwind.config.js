@@ -25,6 +25,9 @@ module.exports = {
     },
 
     extend: {
+      animation:{
+        'bounce-slow': 'bounce 1.2s infinite'
+      },
       gridTemplateColumns: {
         'search-item': '128px minmax(0,1fr)'
       },

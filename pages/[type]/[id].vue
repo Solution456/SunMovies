@@ -4,7 +4,7 @@ import desktopContainer from '~~/components/MoviePage/desktopContainer.vue';
 
 
 definePageMeta({
-    layout: 'movie-page'
+    layout: 'page'
 })
 
 const Components = [

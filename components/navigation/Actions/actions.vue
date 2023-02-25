@@ -2,6 +2,11 @@
 import SearchIcon from '@heroicons/vue/24/outline/MagnifyingGlassIcon'
 import ArrowDown from '@heroicons/vue/24/outline/ChevronDownIcon'
 
+interface actionsProps {
+    SearchActive: boolean
+}
+
+const props = defineProps<actionsProps>()
 
 const emit = defineEmits<{
     (e: 'update'):void
@@ -18,7 +23,7 @@ const clickHandler = () => {
 </script>
 
 <template>
-    <div class="button__search  text-yellow-300 hover:bg-opacity-10 hover:bg-gray-300 transition">
+    <div v-show="!SearchActive" class="button__search text-yellow-300 hover:bg-opacity-10 hover:bg-gray-300 transition">
         <button class="h-14 w-14 px-1.5 py-1 flex justify-center  items-center">
             <SearchIcon @click="clickHandler" class="h-5 w-5"></SearchIcon>
         </button>
