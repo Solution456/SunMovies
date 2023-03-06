@@ -36,7 +36,7 @@ useScrollbar(scrollWrapper)
           class="sidebar_header__container h-full flex items-center justify-between"
         >
           <h3 class="sidebar_header__title uppercase text-sm font-medium">
-            popular trailer
+            Genres <span class="text-yellow-300">filter</span>
           </h3>
           <div class="sidebar_header_actions flex items-center">
             <span
@@ -56,18 +56,7 @@ useScrollbar(scrollWrapper)
         <div ref="scrollWrapper" style="height:calc(100% - 100px)">
           <div class="sidebar_body mt-2 border-b pb-2 border-gray-600">
             <div class="sidebar_body__container flex flex-col">
-              <div
-                class="sidebar_content_item"
-                v-for="movie in mockData"
-                :key="movie.id"
-              >
-                <PublicMovieCard
-                  :id="movie.id"
-                  :url="movie.url"
-                  :title="movie.title"
-                  :gengre="movie.gengre"
-                />
-              </div>
+              
             </div>
           </div>
 

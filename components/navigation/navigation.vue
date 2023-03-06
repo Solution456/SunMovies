@@ -14,22 +14,6 @@ const emit = defineEmits<{
 }>()
 
 
-const links = [
-    {
-        name: 'General',
-        to: '/'
-    },
-    {
-        name: 'TvShow',
-        to: '/Show'
-    },
-    {
-        name: 'Serials',
-        to: '/Serials'
-    }
-
-]
-
 const search = ref('')
 
 const ShowActive = () => {

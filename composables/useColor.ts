@@ -10,7 +10,6 @@ const image = (src:string) => {
 
 
 const getColor = (imageEl:HTMLImageElement, ratio:number) => {
-    console.log('@@@@',imageEl)
     const canvas = document.createElement('canvas') as HTMLCanvasElement
     
     const width = canvas.width = imageEl.width

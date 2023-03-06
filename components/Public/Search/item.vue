@@ -1,10 +1,10 @@
-
 <script setup lang="ts">
 
 import StarIcon from '@heroicons/vue/24/solid/StarIcon'
-
+import { NAV_ROUTES } from '@/constants/routes'
 
 import type { Media } from '~~/types';
+
 
 
 interface SearchItemProps{
@@ -14,12 +14,14 @@ interface SearchItemProps{
 defineProps<SearchItemProps>()
 
 
+const router = useRouter()
+
+
 </script>
 
 
-
 <template>
-    <div  class="search_item">
+    <div  class="search_item hover:bg-gray-300 hover:bg-opacity-10 transition p-2 rounded-md cursor-pointer" @click="router.push(`/${item.media_type}/${item.id}`)">
         <div class="search_item__container  grid grid-cols-search-item relative gap-2">
             <div
                 class="search_item__poster w-32 relative pb-[150%] bg-bgColor rounded-md border-2 border-transparent hover:border-yellow-300 transition duration-200 cursor-pointer">

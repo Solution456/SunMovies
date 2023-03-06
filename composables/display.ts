@@ -7,7 +7,6 @@ export const useDisplay = ()=> {
 
 
     const onResize = () => {
-        console.log('WORK')
         isMobile.value = window.innerWidth < 600
     }
     
