@@ -2,6 +2,7 @@
 import StarIcon from '@heroicons/vue/24/solid/StarIcon'
 
 
+
 import type { Media } from '~~/types';
 
 definePageMeta({
@@ -48,6 +49,9 @@ watch(search, () => {
 
         <PublicInput v-model="search" name="search" icon="search" />
 
+        <PublicVideoPlayer :Source="'s'"/>
+        
+       
 
         <div v-if="SearchItems.length > 0" class="search mt-20">
             <div class="search_items grid grid-cols-1 gap-4">
@@ -80,3 +84,6 @@ watch(search, () => {
     </div>
 
 </template>
+
+<style scoped>
+</style>
