@@ -33,12 +33,8 @@ const trending = await getTrending(typeMedia.value)
             <div class="wrap">
                 <div class="home pt-10">
                     <div class="home_inner">
-                        <ClientOnly>
-                            <template #fallback>
-                                <PublicLoadersSkeletonImage />
-                            </template>
-                            <HomeBanner :item="trending.results[0]" />
-                        </ClientOnly>
+                        <HomeBanner :item="trending.results[0]" />
+
                         <HomeContentItem v-for="query in queries" :key="query.query" :query="query"
                             :type-media="query.type" />
                     </div>
