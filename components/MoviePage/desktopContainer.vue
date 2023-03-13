@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import StarIcon from '@heroicons/vue/24/solid/StarIcon'
-import type { MediaType } from '~~/types';
+import type { Media, MediaType, TorrentFile, TorrentInfo } from '~~/types';
 
 
 const route = useRoute()
@@ -8,10 +8,23 @@ const route = useRoute()
 const id = computed(() => route.params.id as string)
 const typeMedia = computed(() => route.params.type as MediaType || 'movie')
 
+const torrents = ref<TorrentInfo[]>([])
+const video = ref<TorrentFile>()
+const showTorrentList = ref(false)
+
 const [item, recommendations] = await Promise.all([
     getMedia(typeMedia.value, id.value),
     getRecommendations(typeMedia.value, id.value),
 ])
+
+
+const clickHandle = async (item:Media) => {
+   console.log(item.release_date?.split('-')[0] || item.first_air_date)
+   const data = await getTorrentList(`${item.original_title || item.name} ${(item.release_date || item.first_air_date)?.split('-')[0]} AAC`)
+   torrents.value = data
+   showTorrentList.value = !showTorrentList.value
+
+}
 
 
 const creditsList = computed(() => {
@@ -44,7 +57,7 @@ useHead({
                             :url="apiURL.imagePoster(item.poster_path)" />
                     </div>
                     <div class="div">
-                        <MoviePageButtonPlay />
+                        <MoviePageButtonPlay @click="clickHandle(item)" />
                     </div>
                 </div>
 
@@ -69,6 +82,7 @@ useHead({
                                     :photo="credit.profile_path" />
                             </div>
                             <MoviePageRecommendationsMovies :items="recommendations.results" :type="typeMedia"/>
+                            <MoviePageTorrent v-if="torrents.length > 0 || showTorrentList" :torrents="torrents"/>
                         </div>
                         <div class="right">
                             <div class="raiting flex items-center gap-2">

@@ -62,7 +62,7 @@ const loadedDataHandler = (e: any) => {
 }
 
 const videoTimelineHandler = (e: any) => {
-    const timelineWidth = videoTimeline.value.clientWidth
+    const timelineWidth = (videoTimeline.value as HTMLDivElement).clientWidth
     VideoPlayer.value.currentTime = (e.offsetX / timelineWidth) * VideoPlayer.value.duration
 }
 
@@ -89,6 +89,7 @@ const VolumeSliderHandler = (event: Event) => {
 }
 
 const fullscreenHandler = () => {
+    console.log(VideoPlayer)
     // fullscreen.value = !fullscreen.value
     if(document.fullscreenElement){
         return document.exitFullscreen()
@@ -165,7 +166,7 @@ const PlayPause = () => {
 
             </ul>
         </div>
-        <video @loadeddata="loadedDataHandler" @timeupdate="timeUpdateHandle" ref="VideoPlayer" class="w-full"
+        <video @loadeddata="loadedDataHandler" @timeupdate="timeUpdateHandle" ref="VideoPlayer"  class="w-full"
             :src="props.Source"></video>
     </div>
 </template>

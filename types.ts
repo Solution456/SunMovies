@@ -130,3 +130,21 @@ export interface Media {
   export interface Credits {
     cast: Media[]
   }
+
+  export interface TorrentInfo {
+    magnet: string
+    title: string,
+    torrentUrl: string
+  }
+
+  export interface TorrentFile {
+    magnet:string
+    fileName:string
+  }
+
+  export interface Torrent {
+    name:string
+    length:number
+  }
+
+

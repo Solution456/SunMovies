@@ -12,6 +12,9 @@ const props = defineProps<ContentItemProps>()
 
 const router = useRouter()
 
+const toLink = computed(() => {
+    return `${props.typeMedia}/query/${props.query.query}`
+})
 
 const list = await getListMedia(props.typeMedia, props.query.query, 1)
 </script>
@@ -29,7 +32,7 @@ const list = await getListMedia(props.typeMedia, props.query.query, 1)
             </div>
 
             <div class="home_item__action h-full flex">
-                <HomeActionButton @click="router.push(`/${props.typeMedia}/query/${props.query.query}`)">More</HomeActionButton>
+                <HomeActionButton :to="toLink">More</HomeActionButton>
             </div>
         </div>
 

@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue';
+import {FreeMode} from 'swiper'
+
 import 'swiper/css';
-import type { QueryItem, Genre } from '~~/types';
+import 'swiper/css/free-mode';
+
 
 import apiURL from '~~/composables/apiURL';
+
+
+import type { QueryItem, Genre } from '~~/types';
+
 
 
 const props = defineProps<{
@@ -48,6 +55,8 @@ const genresName = (genres:number[]):Genre[] => {
     <swiper
     :slides-per-view='isMobile ? 1.5 : 2.5'
     :space-between="20"
+    :free-mode="true"
+    :modules="[FreeMode]"
     @swiper="onSwiper()"
     @slideChange="onSlideChange"
   >
