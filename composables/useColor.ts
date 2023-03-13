@@ -58,11 +58,20 @@ const getColor = (imageEl:HTMLImageElement, ratio:number) => {
 }
 
 
-export const useColor = (src:string) => {
+export const useColor = async (imgObject:HTMLImageElement) => {
 
-    const img = image(src)
-    const {R,G,B} = getColor(img,4)
+    // const imgUrl =  await apiURL.originalImage(src)
+    // const img = image(imgUrl)
+    // const {R,G,B} = getColor(img,4)
+    console.log(imgObject)
+    const canvas = document.createElement('canvas') as HTMLCanvasElement
+    const context = canvas.getContext('2d') as CanvasRenderingContext2D
 
-    return computed(() => `rgb(${R},${G},${B})`)
+    context.drawImage(imgObject, 0, 0, 1, 1)
+    const i = context.getImageData(0, 0, 1, 1,).data
+
+
+
+    return `rgb(${i[0]},${i[1]},${i[2]})`
 
 }
