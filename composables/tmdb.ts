@@ -34,3 +34,10 @@ export const getTrending = (media: string, page = 1): Promise<PageResult<Media>>
 export const searchTMDB = (query: string, page = 1):Promise<PageResult<Media>> => {
   return fetch(`tmdb/search/multi`, {query,page})
 }
+
+export const getMediaByGenres = (media: string, genres: string, page = 1):Promise<PageResult<Media>> => {
+  return fetch(`tmdb/discover/${media}`, {
+    with_genres: genres,
+    page
+  })
+}

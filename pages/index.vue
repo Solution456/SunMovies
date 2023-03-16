@@ -33,8 +33,8 @@ const trending = await getTrending(typeMedia.value)
             <div class="wrap">
                 <div class="home pt-10">
                     <div class="home_inner">
-                        <HomeBanner :item="trending.results[0]" />
-
+                        <HomeBanner :type="typeMedia" :item="trending.results[0]" />
+                        <HomeFavouriteGenresItem typeMedia="movie" genres="28"/>
                         <HomeContentItem v-for="query in queries" :key="query.query" :query="query"
                             :type-media="query.type" />
                     </div>

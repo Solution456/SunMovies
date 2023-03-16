@@ -4,20 +4,6 @@ import GenreFilter from "./GenreFilter/GenreFilter.vue";
 
 
 const dropdownOptions = ["Today", "Weak", "Month"];
-const mockData = [
-  {
-    id: 1,
-    url: "https://s.yimg.com/ny/api/res/1.2/ZzAHlDHi8a2xdBRRbruaYQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTkyOA--/https://media.zenfs.com/en/homerun/feed_manager_auto_publish_494/d05a3f087fa57f6d41b865d53a42a5f5",
-    title: "Name Trailer 1",
-    gengre: ["Comedy"],
-  },
-  {
-    id: 2,
-    url: "https://www.indiewire.com/wp-content/uploads/2017/09/another-earth-2011.jpg?w=674",
-    title: "Name trailer 2",
-    gengre: ["Drama", "Comedy"],
-  },
-];
 
 const scrollWrapper = ref<HTMLDivElement>()
 useScrollbar(scrollWrapper)

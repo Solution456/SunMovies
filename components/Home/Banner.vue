@@ -1,14 +1,22 @@
 <script setup lang="ts">
-import type { Media } from '~~/types';
+import { NAV_ROUTES } from '@/constants/routes'
+
+
+
+import type { Media, MediaType } from '~~/types';
 
 
 
 interface BannerProps {
     item: Media
+    type: MediaType
 }
 
 const props = defineProps<BannerProps>()
+const router = useRouter()
+
 const fadeColor = 'rgb(253, 211, 106)'
+
 
 
 </script>
@@ -37,7 +45,7 @@ const fadeColor = 'rgb(253, 211, 106)'
                 </div>
             </div>
             <div class="banner_content__footer">
-                <PublicLinkButton>Watch now</PublicLinkButton>
+                <PublicBaseButton :onClick="() => router.push(`${props.type}/${props.item.id}`)">Watch now</PublicBaseButton>
             </div>
         </div>
     </div>

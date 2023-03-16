@@ -1,3 +1,4 @@
+module.exports =
 {
     "printWidth": 100,
     "trailingComma": "none",
@@ -8,5 +9,6 @@
     "arrowParens": "always",
     "max-len": ["error", 140, 2],
     "useTabs": false,
-    "vueIndentScriptAndStyle": false
+    "vueIndentScriptAndStyle": false,
+    "plugins": [require('prettier-plugin-tailwindcss')]
 }

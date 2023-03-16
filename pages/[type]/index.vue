@@ -37,7 +37,7 @@ useHead({
                         <template #fallback>
                             <PublicLoadersSkeletonImage />
                         </template>
-                        <HomeBanner :item="trendMedia.results[0]" />
+                        <HomeBanner :type="typeMedia" :item="trendMedia.results[0]" />
                     </ClientOnly>
 
                     <HomeContentItem v-for="query in queries" :key="query.query" :query="query"
