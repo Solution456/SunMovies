@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { MediaType } from '~~/types';
+import type { Genre, MediaType } from '~~/types';
 import { QUERY_LIST } from '~~/constants/lists';
 
 definePageMeta({
@@ -18,8 +18,14 @@ const queries = computed(() =>
 )
 
 const trending = await getTrending(typeMedia.value)
+const genres = await getGenreList(typeMedia.value)
+
+const FavouriteGenresList = ref<string[]>([])
 
 
+const handleEmit = (value: string[]) => {
+    FavouriteGenresList.value = value
+}
 
 </script>
 
@@ -27,7 +33,7 @@ const trending = await getTrending(typeMedia.value)
 
 <template>
     <div class="px-4 max-w-[1076px] flex gap-2 h-full mx-auto my-0 relative">
-        <HomeSideBar />
+        <HomeSideBar @update="handleEmit" :SelectedFavouriteGenres="FavouriteGenresList" :genres="genres" />
 
         <div class="page_body w-full  py-14 sm:pl-[330px]">
             <div class="wrap">
