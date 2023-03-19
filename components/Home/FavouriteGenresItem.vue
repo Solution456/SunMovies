@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { MediaType} from '~~/types';
+import type { Media, MediaType, PageResult} from '~~/types';
 
 
 interface ContentItemProps {
-    genres: string
+    genres: string[]
     typeMedia: MediaType
 }
 
@@ -13,10 +13,38 @@ const props = defineProps<ContentItemProps>()
 const router = useRouter()
 
 const toLink = computed(() => {
-    return `tv`
+    return `${props.typeMedia}/category/${props.genres.join(' ')}`
 })
 
-const list = await getMediaByGenres(props.typeMedia,props.genres)
+const list = ref<Media[]>([])
+const isLoading = ref(false)
+const error = ref<unknown>()
+
+
+const fetch = async (genres:string[]) => {
+    if (!props.genres) {
+        list.value = []
+        return
+    }
+    try {
+        isLoading.value = true
+        const data = await getMediaByGenres(props.typeMedia,genres.join(','))
+        list.value = data.results
+    } catch (er) {
+        isLoading.value = false
+        error.value = er
+    } finally {
+        isLoading.value = false
+    }
+}
+
+
+watch(()=> props.genres, async (val) => {
+    console.log('FETCH')
+    await fetch(val)
+}, {
+    immediate:true
+})
 </script>
 
 
@@ -24,10 +52,10 @@ const list = await getMediaByGenres(props.typeMedia,props.genres)
     <div class="home_item mt-6">
         <div class="flex justify-between items-center">
             <div class="home_item__title font-light flex items-center gap-4">
-                <h4 class="home_item__text">{{ props.typeMedia }} by favourite Genres</h4>
+                <h4 class="home_item__text">By favourite Genres</h4>
                 <span class="opacity-20">|</span>
                 <div class="home_item__movCount">
-                    <span class=" text-yellow-300 font-medium">{{ list.results.length }}</span> {{ props.typeMedia }}
+                    <span class=" text-yellow-300 font-medium">{{ list.length }}</span> {{ props.typeMedia }}
                 </div>
             </div>
 
@@ -37,8 +65,11 @@ const list = await getMediaByGenres(props.typeMedia,props.genres)
         </div>
 
 
-        <div class="home_item__content mt-4 flex sm:w-full">
-            <PublicCarousel :type="props.typeMedia" :items="list.results" />
+        <div v-if="!isLoading" class="home_item__content mt-4 flex sm:w-full">
+            <PublicCarousel :type="props.typeMedia" :items="list" />
+        </div>
+        <div v-if="isLoading">
+            <PublicLoadersSpinner/>
         </div>
     </div>
 </template>

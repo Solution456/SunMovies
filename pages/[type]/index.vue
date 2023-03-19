@@ -6,7 +6,6 @@ import type { MediaType } from '~~/types';
 
 
 definePageMeta({
-    layout: 'page',
     key: route => route.fullPath,
     validate: ({ params }) => {
         return ['movie', 'tv'].includes(params.type as MediaType)
@@ -29,23 +28,24 @@ useHead({
 
 
 <template>
-    <div class="px-4 max-w-[1076px] flex gap-2 h-full mx-auto my-0 relative">
-        <div class="page_body w-full py-14">
-            <div class="container pt-10">
-                <div class="container_inner">
-                    <ClientOnly>
-                        <template #fallback>
-                            <PublicLoadersSkeletonImage />
-                        </template>
-                        <HomeBanner :type="typeMedia" :item="trendMedia.results[0]" />
-                    </ClientOnly>
+    <NuxtLayout name="page">
+        <div class="px-4 max-w-[1076px] flex gap-2 h-full mx-auto my-0 relative">
+            <div class="page_body w-full py-14">
+                <div class="container pt-10">
+                    <div class="container_inner">
+                        <ClientOnly>
+                            <template #fallback>
+                                <PublicLoadersSkeletonImage />
+                            </template>
+                            <HomeBanner :type="typeMedia" :item="trendMedia.results[0]" />
+                        </ClientOnly>
 
-                    <HomeContentItem v-for="query in queries" :key="query.query" :query="query"
-                        :type-media="typeMedia" />
+                        <HomeContentItem v-for="query in queries" :key="query.query" :query="query"
+                            :type-media="typeMedia" />
+                    </div>
                 </div>
+
             </div>
-
         </div>
-    </div>
-
+    </NuxtLayout>
 </template>

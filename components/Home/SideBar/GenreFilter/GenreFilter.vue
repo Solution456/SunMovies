@@ -26,6 +26,7 @@ const SelectedGenres = computed(() => {
     return tmpArray
 })
 
+
 const handleEmit = (value: string[]) => {
     emit('update',value)
 }
@@ -55,7 +56,7 @@ const handleEmit = (value: string[]) => {
                 </div>
 
                 <div class="genre_filter__actions mt-2">
-                    <PublicListbox @update="handleEmit" :options="Genres"/>
+                    <PublicListbox :selectedOptions="props.FavouriteGenres" @update="handleEmit" :options="Genres"/>
                 </div>
             </div> 
     </div>

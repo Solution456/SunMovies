@@ -3,6 +3,7 @@ import type { Media, MediaQueryType, MediaType } from '~~/types';
 
 
 definePageMeta({
+    
     key: route => route.fullPath,
 })
 
@@ -11,17 +12,17 @@ definePageMeta({
 const route = useRoute()
 
 const type = computed(() => route.params.type as MediaType)
-const query = computed(() => route.params.query as MediaQueryType)
+const no = computed(() => route.params.no as string)
 
 const items: Media[] = reactive([])
 
 useHead({
-    title: type.value === 'movie' ? `Movies/${query.value}` : `TV Shows/${query.value}`,
+    title: type.value === 'movie' ? `Movie-category` : `TV Shows-category`,
 })
 
 
 const fetch = async (page: number) => {
-    const mediaList = await getListMedia(type.value, query.value, page)
+    const mediaList = await getMediaByGenres(type.value, no.value.replace(' ', ','), page)
     items.push(...mediaList.results)
 }
 

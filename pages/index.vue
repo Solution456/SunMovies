@@ -2,9 +2,6 @@
 import type { Genre, MediaType } from '~~/types';
 import { QUERY_LIST } from '~~/constants/lists';
 
-definePageMeta({
-    layout: 'page'
-})
 
 const route = useRoute()
 const typeMedia = computed(() => route.params.type as MediaType || 'movie')
@@ -32,20 +29,23 @@ const handleEmit = (value: string[]) => {
 
 
 <template>
-    <div class="px-4 max-w-[1076px] flex gap-2 h-full mx-auto my-0 relative">
-        <HomeSideBar @update="handleEmit" :SelectedFavouriteGenres="FavouriteGenresList" :genres="genres" />
+    <NuxtLayout name="page">
+        <div class="px-4 max-w-[1076px] flex gap-2 h-full mx-auto my-0 relative">
+            <HomeSideBar @update="handleEmit" :SelectedFavouriteGenres="FavouriteGenresList" :genres="genres" />
 
-        <div class="page_body w-full  py-14 sm:pl-[330px]">
-            <div class="wrap">
-                <div class="home pt-10">
-                    <div class="home_inner">
-                        <HomeBanner :type="typeMedia" :item="trending.results[0]" />
-                        <HomeFavouriteGenresItem typeMedia="movie" genres="28"/>
-                        <HomeContentItem v-for="query in queries" :key="query.query" :query="query"
-                            :type-media="query.type" />
+            <div class="page_body w-full  py-14 sm:pl-[330px]">
+                <div class="wrap">
+                    <div class="home pt-10">
+                        <div class="home_inner">
+                            <HomeBanner :type="typeMedia" :item="trending.results[0]" />
+                            <HomeFavouriteGenresItem v-if="FavouriteGenresList.length > 0" typeMedia="movie"
+                                :genres="FavouriteGenresList" />
+                            <HomeContentItem v-for="query in queries" :key="query.query" :query="query"
+                                :type-media="query.type" />
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </NuxtLayout>
 </template>

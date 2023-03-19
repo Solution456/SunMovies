@@ -5,6 +5,7 @@ import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from '@headless
 import type { Genre } from '~~/types';
 
 interface ListBoxProps {
+    selectedOptions:string[]
     options: Genre[]
 }
 
@@ -14,7 +15,7 @@ interface ListBoxEmits {
 
 const props = defineProps<ListBoxProps>()
 
-const selectedOptionsLocal = ref<string[]>([])
+const selectedOptionsLocal = ref<string[]>(props.selectedOptions)
 
 
 const emit = defineEmits<ListBoxEmits>()
@@ -33,16 +34,16 @@ watch(selectedOptionsLocal, (newSelectedOptionsLocal) => {
                 <HomeSideBarGenreFilterActionButton />
             </ListboxButton>
             <transition name="bounce">
-            <ListboxOptions class="absolute mt-1 w-full max-h-56 overflow-auto bg-bgColor  rounded-md shadow-md py-2">
+            <ListboxOptions class="absolute mt-1 w-full max-h-56 overflow-auto bg-bgColor  rounded-md shadow-md p-2">
                 <ListboxOption v-slot="{ active, selected }" v-for="option in props.options" :key="option.id"
                     :value="option.id" as="template">
                     <li :class="[
-                        active ? 'bg-opacity-10 bg-gray-300' : 'text-white',
-                        'relative cursor-default py-2 px-2',
+                        active ? 'bg-opacity-10 bg-gray-300 ' : 'text-gray-400',
+                        'relative cursor-default rounded-md',
                     ]">
                         <span :class="[
-                            selected ? 'font-medium' : 'font-normal',
-                            'block truncate',
+                            selected ? 'font-medium text-yellow-300 bg-gray-300 bg-opacity-10 shadow-md' : 'font-normal',
+                            'block truncate p-2 rounded-md',
                         ]">
                             {{ option.name }}
                         </span>

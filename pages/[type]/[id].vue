@@ -3,9 +3,6 @@ import mobileContainer from '~~/components/MoviePage/mobileContainer.vue';
 import desktopContainer from '~~/components/MoviePage/desktopContainer.vue';
 
 
-definePageMeta({
-    layout: 'page'
-})
 
 const Components = [
     mobileContainer,
@@ -18,8 +15,9 @@ const isMobile = useDisplay()
 
 
 <template>
-    <div class="page_body overflow-hidden w-full pt-14 h-full">
-       <component :is= "isMobile ? Components[0]: Components[1]"></component>
-    </div>
-
+    <NuxtLayout name="page">
+        <div class="page_body overflow-hidden w-full pt-14 h-full">
+            <component :is="isMobile ? Components[0] : Components[1]"></component>
+        </div>
+    </NuxtLayout>
 </template>
