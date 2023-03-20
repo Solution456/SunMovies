@@ -14,7 +14,7 @@ const item = await getMedia(typeMedia.value, id.value)
 <template>
     <div class="movie-mobile relative">
             <div class="movie-mobile__cover fixed top-0 left-0 h-[150vw] w-full">
-                <div :style="`background-image:url(${apiURL.imagePoster(item.poster_path)})`" class="movie_bg bg-cover bg-center z-0 top-0 h-full  md:h-[600px] w-full">
+                <div :style="`background-image:url(${apiURL.imageW500(item.poster_path)})`" class="movie_bg bg-cover bg-center z-0 top-0 h-full  md:h-[600px] w-full">
             </div>
             </div>
             <div class="movie_bg__fade absolute w-full h-[300vw] z-0"></div>

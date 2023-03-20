@@ -24,7 +24,7 @@ const list = await getListMedia(props.typeMedia, props.query.query, 1)
     <div class="home_item mt-6">
         <div class="flex justify-between items-center">
             <div class="home_item__title font-light flex items-center gap-4">
-                <h4 class="home_item__text">{{ props.query.title }}</h4>
+                <h4 class="home_item__text uppercase font-semibold">{{ props.query.title }}</h4>
                 <span class="opacity-20">|</span>
                 <div class="home_item__movCount">
                     <span class=" text-yellow-300 font-medium">{{ list.results.length }}</span> {{ typeMedia }}
@@ -37,7 +37,7 @@ const list = await getListMedia(props.typeMedia, props.query.query, 1)
         </div>
 
 
-        <div class="home_item__content mt-4 flex sm:w-full">
+        <div class="home_item__content overflow-hidden mt-4 h-[300px] flex sm:w-full">
             <PublicCarousel :items="list.results" :type="props.typeMedia"/>
         </div>
     </div>

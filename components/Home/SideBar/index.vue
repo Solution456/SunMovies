@@ -39,14 +39,6 @@ const handleEmit = (value: string[]) => {
           <h3 class="sidebar_header__title uppercase text-sm font-medium">
             Genres <span class="text-yellow-300">filter</span>
           </h3>
-          <!-- <div class="sidebar_header_actions flex items-center">
-            <span class="header_action__title text-[10px] text-gray-300 font-normal">
-              Sort By
-            </span>
-            <div class="header_action__item">
-              <PublicDropDownMenu :Options="dropdownOptions"></PublicDropDownMenu>
-            </div>
-          </div> -->
         </div>
       </div>
 
@@ -58,9 +50,9 @@ const handleEmit = (value: string[]) => {
         </div>
 
         <div class="sidebar_footer">
-          <ClientOnly>
+          
             <HomeSideBarGenreFilter @update="handleEmit" :FavouriteGenres="SelectedFavouriteGenres" :Genres="props.genres" />
-          </ClientOnly>
+          
         </div>
       </div>
 

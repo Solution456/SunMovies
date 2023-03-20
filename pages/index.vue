@@ -30,7 +30,7 @@ const handleEmit = (value: string[]) => {
 
 <template>
     <NuxtLayout name="page">
-        <div class="px-4 max-w-[1076px] flex gap-2 h-full mx-auto my-0 relative">
+        <div class="px-4 md:max-w-[1076px] xs:max-w-[614px] flex gap-2 h-full mx-auto my-0 relative">
             <HomeSideBar @update="handleEmit" :SelectedFavouriteGenres="FavouriteGenresList" :genres="genres" />
 
             <div class="page_body w-full  py-14 sm:pl-[330px]">

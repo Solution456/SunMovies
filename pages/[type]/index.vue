@@ -29,9 +29,9 @@ useHead({
 
 <template>
     <NuxtLayout name="page">
-        <div class="px-4 max-w-[1076px] flex gap-2 h-full mx-auto my-0 relative">
+        <div class="px-4 md:max-w-[1076px] xs:max-w-[614px] flex gap-2 h-full mx-auto my-0 relative">
             <div class="page_body w-full py-14">
-                <div class="container pt-10">
+                <div>
                     <div class="container_inner">
                         <ClientOnly>
                             <template #fallback>

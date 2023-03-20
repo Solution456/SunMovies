@@ -6,14 +6,12 @@ export const useDisplay = ()=> {
     const isMobile = ref(false)
 
 
-    const onResize = () => {
+    const onResize = throttle(() => {
         isMobile.value = window.innerWidth < 600
-    }
+    },500)
     
 
     onMounted( ()=> {
-        onResize()
-
         window.addEventListener('resize', onResize, {passive:true})
     })
 

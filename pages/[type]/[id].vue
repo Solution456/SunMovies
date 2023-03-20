@@ -16,7 +16,7 @@ const isMobile = useDisplay()
 
 <template>
     <NuxtLayout name="page">
-        <div class="page_body overflow-hidden w-full pt-14 h-full">
+        <div class="page_body overflow-hidden w-full h-full">
             <component :is="isMobile ? Components[0] : Components[1]"></component>
         </div>
     </NuxtLayout>

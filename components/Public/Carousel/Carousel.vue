@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import {FreeMode} from 'swiper'
+import {FreeMode, Mousewheel} from 'swiper'
 
 import 'swiper/css';
 import 'swiper/css/free-mode';
@@ -58,12 +58,14 @@ const genresName = (genres:number[]):Genre[] => {
     :slides-per-view='isMobile ? 1.5 : 2.5'
     :space-between="20"
     :free-mode="true"
-    :modules="[FreeMode]"
+    :mousewheel="true"
+    :auto-height="true"
+    :modules="[FreeMode, Mousewheel]"
     @swiper="onSwiper()"
     @slideChange="onSlideChange"
   >
     <swiper-slide v-for="item of items" :key="item.id">
-        <PublicCarouselCard :id="item.id" :url="apiURL.imageW300(item.poster_path)" :title="item.title || item.name" :raiting="item.vote_average" :type="props.type" :genres="genresName(item.genre_ids)"/>
+        <PublicCarouselCard :id="item.id" :url="apiURL.imageW500(item.poster_path)" :title="item.title || item.name" :raiting="item.vote_average" :type="props.type" :genres="genresName(item.genre_ids)"/>
     </swiper-slide>
   </swiper>
 </template>
@@ -71,6 +73,6 @@ const genresName = (genres:number[]):Genre[] => {
 
 <style scoped>
 .swiper-slide{
-    width: 300px;
+    width: 200px !important;
 }
 </style>

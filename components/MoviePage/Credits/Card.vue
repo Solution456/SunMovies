@@ -19,7 +19,7 @@ const props = defineProps<CreditsCardProps>()
 <template>
     <div class="Credits-Card w-28">
         <div class="Credits-Card__photo rounded-md relative pb-[150%] bg-bgColor">
-            <NuxtImg v-if="props.photo" :src="apiURL.imagePoster(props.photo)" :alt="props.name"
+            <NuxtImg v-if="props.photo" :src="apiURL.imageW500(props.photo)" :alt="props.name"
                 class="rounded-md object-cover max-w-full align-middle bg-bgColor h-full w-full absolute top-0 left-0"
                 loading="lazy" />
         </div>

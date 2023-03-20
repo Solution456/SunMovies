@@ -54,7 +54,7 @@ useHead({
                 <div class="wrapper-grid justify-center">
                     <div class="div">
                         <PublicImageContainer width="300" min-height="400"
-                            :url="apiURL.imagePoster(item.poster_path)" />
+                            :url="apiURL.imageW500(item.poster_path)" />
                     </div>
                     <div class="div">
                         <MoviePageButtonPlay @click="clickHandle(item)" />

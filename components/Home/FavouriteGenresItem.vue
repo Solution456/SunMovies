@@ -52,7 +52,7 @@ watch(()=> props.genres, async (val) => {
     <div class="home_item mt-6">
         <div class="flex justify-between items-center">
             <div class="home_item__title font-light flex items-center gap-4">
-                <h4 class="home_item__text">By favourite Genres</h4>
+                <h4 class="home_item__text uppercase font-semibold">For you</h4>
                 <span class="opacity-20">|</span>
                 <div class="home_item__movCount">
                     <span class=" text-yellow-300 font-medium">{{ list.length }}</span> {{ props.typeMedia }}
@@ -65,7 +65,7 @@ watch(()=> props.genres, async (val) => {
         </div>
 
 
-        <div v-if="!isLoading" class="home_item__content mt-4 flex sm:w-full">
+        <div v-if="!isLoading" class="home_item__content mt-4 h-[300px] flex sm:w-full">
             <PublicCarousel :type="props.typeMedia" :items="list" />
         </div>
         <div v-if="isLoading">
