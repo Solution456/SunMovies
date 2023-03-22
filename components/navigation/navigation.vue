@@ -55,7 +55,7 @@ onMounted(() => {
 
 <template>
     <header class="navigation fixed overflow-hidden w-full z-[120] left-0 top-0 mx-auto transition-[height,background-color] ease-linear duration-200"
-        :class="[{ 'bg-black/90': AnimateHeader || isOpen}, isOpen?'h-auto':'h-14' ]">
+        :class="[{ 'bg-black/90 shadow-md': AnimateHeader || isOpen}, isOpen?'h-auto':'h-14' ]">
         <div class="page_header w-full h-full  sm:max-w-[85%] relative sm:mx-auto">
 
 
@@ -82,7 +82,7 @@ onMounted(() => {
 
                 <!-- Search -->
                 <div v-if="props.SearchActive"
-                    class="search-container max-w-[600px] m-auto flex flex-grow flex-shrink-0 basis-auto">
+                    class="search-container max-w-[300px] xs:max-w-[600px] m-auto flex flex-grow flex-shrink-0 basis-auto">
                     <div class="content flex-grow flex-shrink-0 basis-0 max-w-full">
                         <PublicInput name="search" v-model="search" icon="search" />
                     </div>

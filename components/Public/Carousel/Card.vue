@@ -23,7 +23,7 @@ const router = useRouter()
 </script>
 
 <template>
-    <div @click="() => router.push(`${props.type}/${props.id}`)"
+    <NuxtLink :to="`${props.type}/${props.id}`"
         class="CarouselCard group relative block box-border w-full cursor-pointer bg-transparent rounded-md">
         <div class="CarouselCard_container overflow-hidden relative flex flex-auto max-w-full">
             <div class="pb-[150%]"></div>
@@ -50,5 +50,5 @@ const router = useRouter()
                     </div>
                 </div>
             </div>
-    </div>
+    </NuxtLink>
 </template>

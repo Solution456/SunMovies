@@ -2,20 +2,19 @@
 import StarIcon from '@heroicons/vue/24/solid/StarIcon'
 
 interface raitingProps {
-    raiting:string | number
+    raiting: string | number
 }
 
 const props = defineProps<raitingProps>()
 </script>
 
 <template>
-    <div class="stars_wrap flex items-center gap-1">
-        <div class="stars__icon text-yellow-300">
-            <StarIcon class="h-5 w-5"/>  
-        </div>
-        <div class="stars__raiting font-medium text-md">
+    <span class="inline-flex items-center font-bold font-poppins text-[16px]">
+        <div class="flex items-center gap-1">
+            <span class="stars__icon inline-flex items-center h-4 w-4 justify-center align-middle text-yellow-300">
+                <StarIcon class="h-full w-full" />
+            </span>
             <span>{{ props.raiting }}</span>
         </div>
-    </div>
-    
+    </span>
 </template>

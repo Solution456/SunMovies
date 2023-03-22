@@ -18,7 +18,7 @@ withDefaults(defineProps<buttonProps>(), {
 </script>
 
 <template>
-    <button @click="onClick" class="button inline-flex rounded-md items-center border-[1.5px] justify-center w-full transition" :class="[
+    <button @click="onClick" class="button inline-flex rounded-md items-center border-[1.5px] justify-center w-full transition shadow-sm" :class="[
         {
             'min-h-[40px] py-2 px-4': size === 'md',
             'py-1 px-3': size === 'sm'

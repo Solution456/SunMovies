@@ -12,6 +12,7 @@ export const useDisplay = ()=> {
     
 
     onMounted( ()=> {
+        onResize()
         window.addEventListener('resize', onResize, {passive:true})
     })
 

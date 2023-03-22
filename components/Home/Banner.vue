@@ -25,8 +25,8 @@ const fadeColor = 'rgb(253, 211, 106)'
 
 
 <template>
-    <div class="banner mb-10 relative flex cursor-pointer bg-transparent h-96 overflow-hidden rounded-md">
-        <NuxtImg :src="apiURL.originalImage(props.item.backdrop_path)" :alt="props.item.title" 
+    <div class="banner mb-10 relative flex cursor-pointer bg-transparent h-96 overflow-hidden rounded-md shadow">
+        <NuxtImg :src="apiURL.originalImage(props.item.backdrop_path)" :alt="props.item.title" loading="lazy"
             class="banner_img h-full w-full bg-slate-600 bg-no-repeat bg-center bg-cover object-cover" />
         <div class="banner__fade absolute inset-0 transition-all"
             :style="`background-image: linear-gradient(to right, ${fadeColor} , ${fadeColor} 30%, transparent 100%, transparent);`">
@@ -40,7 +40,7 @@ const fadeColor = 'rgb(253, 211, 106)'
                 <div class="banner_content_raiting">
                     <PublicRaitingStars :raiting="item.vote_average" />
                 </div>
-                <div class="banner_content__overview text-sm mt-4">
+                <div class="banner_content__overview hidden xs:block text-sm mt-4">
                     {{ props.item.overview }}
                 </div>
             </div>

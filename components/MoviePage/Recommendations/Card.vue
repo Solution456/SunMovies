@@ -17,7 +17,7 @@ const router = useRouter()
 
 
 <template>
-    <div class="RecommendationsCard w-32 relative ">
+    <div class="RecommendationsCard xs:w-32 relative ">
         
         <div @click="router.push(`/${item.media_type || type}/${item.id}`)"
             class="RecommendationsCard__poster relative pb-[150%] bg-bgColor rounded-md border-2 border-transparent hover:border-yellow-300 transition duration-200 cursor-pointer">
