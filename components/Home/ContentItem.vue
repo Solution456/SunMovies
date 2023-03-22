@@ -37,7 +37,7 @@ const list = await getListMedia(props.typeMedia, props.query.query, 1)
         </div>
 
 
-        <div class="home_item__content overflow-hidden mt-4 h-[300px] flex sm:w-full">
+        <div class="home_item__content overflow-hidden max-w-[100vw] w-full mt-2">
             <PublicCarousel :items="list.results" :type="props.typeMedia"/>
         </div>
     </div>

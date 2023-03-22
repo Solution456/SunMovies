@@ -23,15 +23,20 @@ const router = useRouter()
 </script>
 
 <template>
-    <NuxtLink :to="`${props.type}/${props.id}`"
-        class="CarouselCard group relative block box-border w-full cursor-pointer bg-transparent rounded-md">
-        <div class="CarouselCard_container overflow-hidden relative flex flex-auto max-w-full">
-            <div class="pb-[150%]"></div>
-            <div class="CarouselCard_background-container absolute top-0 left-0 bg-bgColor bg-no-repeat bg-[50%] bg-cover max-w-full w-full h-full rounded-md" :style="`background-image:url(${props.url})`">
+    <div class="w-[200px]">
+
+
+        <NuxtLink :to="`${props.type}/${props.id}`"
+            class="CarouselCard group relative block box-border w-full cursor-pointer bg-transparent rounded-md">
+            <div class="CarouselCard_container overflow-hidden relative flex flex-auto max-w-full">
+                <div class="pb-[150%]"></div>
+                <div class="CarouselCard_background-container absolute top-0 left-0 bg-bgColor bg-no-repeat bg-[50%] bg-cover max-w-full w-full h-full rounded-md"
+                    :style="`background-image:url(${props.url})`">
+                </div>
+
             </div>
-            
-        </div>
-        <div class="CarouselCard_content opacity-0 will-change-[opacity] transition group-hover:opacity-100  group-hover:bg-black/10 h-full w-full flex absolute inset-0 items-end">
+            <div
+                class="CarouselCard_content opacity-0 will-change-[opacity] transition group-hover:opacity-100  group-hover:bg-black/10 h-full w-full flex absolute inset-0 items-end">
 
                 <div class="wrap h-1/3 relative rounded-md w-full flex items-center">
                     <div class="information h-full flex items-center p-3 flex-1 ">
@@ -50,5 +55,6 @@ const router = useRouter()
                     </div>
                 </div>
             </div>
-    </NuxtLink>
+        </NuxtLink>
+    </div>
 </template>
