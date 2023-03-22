@@ -1,21 +1,26 @@
 <script setup lang="ts">
 import StarIcon from '@heroicons/vue/24/solid/StarIcon'
+
+
 import type { Media, MediaType, TorrentFile, TorrentInfo } from '~~/types';
 
 
-const route = useRoute()
-
-const id = computed(() => route.params.id as string)
-const typeMedia = computed(() => route.params.type as MediaType || 'movie')
+const props = defineProps<{
+    id:string,
+    item:Media
+    recommendations:Media[]
+    type:MediaType
+}>()
 
 const torrents = ref<TorrentInfo[]>([])
 const video = ref<TorrentFile>()
 const showTorrentList = ref(false)
 
-const [item, recommendations] = await Promise.all([
-    getMedia(typeMedia.value, id.value),
-    getRecommendations(typeMedia.value, id.value),
-])
+
+
+const creditsList = computed(() => {
+    return props.item.credits?.cast.slice(0, 4)
+})
 
 
 const clickHandle = async (item:Media) => {
@@ -27,25 +32,13 @@ const clickHandle = async (item:Media) => {
 }
 
 
-const creditsList = computed(() => {
-    return item.credits?.cast.slice(0, 4)
-})
-
-useHead({
-    title: item.name || item.title,
-    meta: [
-        { name: 'description', content: item.overview },
-    ]
-})
-
-
 
 </script>
 
 
 <template>
     <div class="movie relative max-w-full flex flex-col md:w-full md:block  h-full ">
-        <div :style="`background-image:url(${apiURL.originalImage(item.backdrop_path)})`"
+        <div :style="`background-image:url(${apiURL.originalImage(props.item.backdrop_path)})`"
             class="movie_bg bg-cover bg-center absolute z-0 top-0 h-[600px] w-full"></div>
         <div class="movie_bg__fade absolute w-full h-[600px] z-0"></div>
 
@@ -54,10 +47,10 @@ useHead({
                 <div class="wrapper-grid justify-center">
                     <div class="div">
                         <PublicImageContainer width="300" min-height="400"
-                            :url="apiURL.imageW500(item.poster_path)" />
+                            :url="apiURL.imageW500(props.item.poster_path)" />
                     </div>
                     <div class="div">
-                        <MoviePageButtonPlay @click="clickHandle(item)" />
+                        <MoviePageButtonPlay @click="clickHandle(props.item)" />
                     </div>
                 </div>
 
@@ -67,21 +60,21 @@ useHead({
                     <div class="movie__content__info ml-6">
                         <div class="movie__content__info--left">
                             <div class="movie__other text-sm text-gray-300 font-light">
-                                <span class="text-yellow-300">{{ item.release_date || item.first_air_date }}</span> / {{ item.status }}
+                                <span class="text-yellow-300">{{ props.item.release_date || props.item.first_air_date }}</span> / {{ props.item.status }}
                             </div>
                             <h2 class=" text-5xl font-medium font-oswald">
-                                {{ item.title || item.name}}
+                                {{ props.item.title || props.item.name}}
                             </h2>
                             <div class="genres-group flex gap-2 mt-3">
-                                <PublicChip v-for="genre in item.genres">{{ genre.name }}</PublicChip>
+                                <PublicChip v-for="genre in props.item.genres">{{ genre.name }}</PublicChip>
                             </div>
-                            <div class="description text-sm font-light mt-4">{{ item.overview }}</div>
+                            <div class="description text-sm font-light mt-4">{{ props.item.overview }}</div>
                             <div class="credits flex gap-2 mt-10">
                                 <MoviePageCreditsCard v-for="credit in creditsList" :key="credit.id"
                                     :charecters="credit.character" :id="credit.id" :name="credit.name"
                                     :photo="credit.profile_path" />
                             </div>
-                            <MoviePageRecommendationsMovies :items="recommendations.results" :type="typeMedia"/>
+                            <MoviePageRecommendationsMovies :items="recommendations" :type="props.type"/>
                             <MoviePageTorrent v-if="torrents.length > 0 || showTorrentList" :torrents="torrents"/>
                         </div>
                         <div class="right">

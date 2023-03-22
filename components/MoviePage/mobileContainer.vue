@@ -1,44 +1,50 @@
 <script setup lang="ts">
-import type { MediaType } from '~~/types';
-
-const route = useRoute()
-
-const id = computed(() => route.params.id as string)
-const typeMedia = computed(() => route.params.type as MediaType || 'movie')
+import type { Media, MediaType, TorrentFile, TorrentInfo } from '~~/types';
 
 
-const [item, recommendations] = await Promise.all([
-    getMedia(typeMedia.value, id.value),
-    getRecommendations(typeMedia.value, id.value),
-])
+const props = defineProps<{
+    id:string,
+    item:Media
+    recommendations:Media[]
+    type:MediaType
+}>()
+
+const torrents = ref<TorrentInfo[]>([])
+const video = ref<TorrentFile>()
+const showTorrentList = ref(false)
+
+
 
 const creditsList = computed(() => {
-    return item.credits?.cast.slice(0, 4)
+    return props.item.credits?.cast.slice(0, 4)
 })
 
 
-useHead({
-    title: item.name || item.title,
-    meta: [
-        { name: 'description', content: item.overview },
-    ]
-})
+const clickHandle = async (item:Media) => {
+   console.log(item.release_date?.split('-')[0] || item.first_air_date)
+   const data = await getTorrentList(`${item.original_title || item.name} ${(item.release_date || item.first_air_date)?.split('-')[0]} AAC`)
+   torrents.value = data
+   showTorrentList.value = !showTorrentList.value
+
+}
+
+
 </script>
 
 
 <template>
     <div class="movie-mobile relative">
         <div class="movie-mobile__cover fixed top-0 left-0 h-[150vw] w-full">
-            <div :style="`background-image:url(${apiURL.imageW500(item.poster_path)})`"
+            <div :style="`background-image:url(${apiURL.imageW500(props.item.poster_path)})`"
                 class="movie_bg bg-cover bg-center z-0 top-0 h-full  md:h-[600px] w-full">
             </div>
         </div>
         <div class="movie_bg__fade absolute w-full h-[300vw] z-0"></div>
 
         <div class="movie__titles px-4 pb-3 pt-[calc(100vw-100px)] relative">
-            <div class="movie_title text-lg font-semibold font-oswald">{{ item.title }}</div>
+            <div class="movie_title text-lg font-semibold font-oswald">{{ props.item.title || props.item.name}}</div>
             <div class="movie__other mt-2 text-sm text-gray-300 font-light">
-                <span class="text-yellow-300">{{ item.release_date }}</span> / {{ item.status }}
+                <span class="text-yellow-300">{{ props.item.release_date || props.item.first_air_date }}</span> / {{ props.item.status }}
             </div>
         </div>
 
@@ -48,7 +54,7 @@ useHead({
                     <MoviePageButtonPlay @click="" />
                 </div>
                 <div class="movie__information">
-                    <PublicRaitingStars :raiting="item.vote_average" />
+                    <PublicRaitingStars :raiting="props.item.vote_average" />
                     <div class="description text-sm mt-2">
                         <p>
                             {{ item.overview }}
@@ -57,14 +63,14 @@ useHead({
                     <div class="genres mt-4">
                         <div class="title font-semibold uppercase text-sm text-gray-300">genres:</div>
                         <div class="genres-group flex gap-2 mt-3">
-                            <PublicChip v-for="genre in item.genres">{{ genre.name }}</PublicChip>
+                            <PublicChip v-for="genre in props.item.genres">{{ genre.name }}</PublicChip>
                         </div>
                     </div>
                     <div class="credits flex flex-col gap-2 mt-10">
                         <MoviePageCreditsCard v-for="credit in creditsList" :key="credit.id" :charecters="credit.character"
                             :id="credit.id" :name="credit.name" :photo="credit.profile_path" />
                     </div>
-                    <MoviePageRecommendationsMovies :items="recommendations.results" :type="typeMedia" />
+                    <MoviePageRecommendationsMovies :items="props.recommendations" :type="props.type" />
                 </div>
             </div>
         </div>

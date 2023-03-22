@@ -28,7 +28,7 @@ const props = defineProps<CreditsCardProps>()
                 </div>
 
             </div>
-            <div class="Credits-Card__body text-center mt-2 p-2">
+            <div class="Credits-Card__body xs:text-center mt-2 p-2">
                 <div class="Credits-Card__name text-sm">
                     {{ props.name }}
                 </div>
