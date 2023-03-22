@@ -14,11 +14,11 @@ interface PlayerProps {
 
 const props = defineProps<PlayerProps>()
 
-const VideoPlayer = ref<HTMLVideoElement>()
-const progressBar = ref<HTMLDivElement>()
-const volumeSlider = ref<HTMLInputElement>()
-const container = ref<HTMLDivElement>()
-const videoTimeline = ref<HTMLDivElement>()
+const VideoPlayer = ref<HTMLVideoElement | null>(null)
+const progressBar = ref<HTMLDivElement | null>(null)
+const volumeSlider = ref<HTMLInputElement | null>(null)
+const container = ref<HTMLDivElement | null>(null)
+const videoTimeline = ref<HTMLDivElement | null>(null)
 
 
 const setPlayPause = ref(false)
@@ -49,7 +49,7 @@ const formatTime = (time:number) => {
 const timeUpdateHandle = (e: any) => {
     const { currentTime, duration } = e.target
     const prc = (currentTime / duration) * 100
-    if (progressBar.value !== undefined) {
+    if (progressBar.value) {
         progressBar.value.style.width = `${prc}%`
     }
     currentVideoTime.value = formatTime(currentTime)
@@ -63,19 +63,21 @@ const loadedDataHandler = (e: any) => {
 
 const videoTimelineHandler = (e: any) => {
     const timelineWidth = (videoTimeline.value as HTMLDivElement).clientWidth
-    VideoPlayer.value.currentTime = (e.offsetX / timelineWidth) * VideoPlayer.value.duration
+    if(VideoPlayer.value)
+        VideoPlayer.value.currentTime = (e.offsetX / timelineWidth) * VideoPlayer.value.duration
 }
 
 const volumeHandler = () => {
     muteVolume.value = !muteVolume.value
-    if (VideoPlayer.value !== undefined)
+    if (VideoPlayer.value)
         if (!muteVolume.value){
             VideoPlayer.value.volume = 0.5
         }   
         else{
             VideoPlayer.value.volume = 0
         }
-        volumeSlider.value.valueAsNumber = VideoPlayer.value?.volume 
+        if(VideoPlayer.value && volumeSlider.value)
+            volumeSlider.value.valueAsNumber = VideoPlayer.value.volume 
             
 }
 
