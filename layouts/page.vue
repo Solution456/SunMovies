@@ -1,4 +1,7 @@
 <script setup lang="ts">
+
+
+
 const SearchState = ref(false)
 const search = ref('')
 
@@ -9,6 +12,8 @@ const handleSearchState = () => {
 const updateSearchValue = (value:string)=> {
   search.value = value
 }
+
+
 
 
 
@@ -25,6 +30,8 @@ const updateSearchValue = (value:string)=> {
       <slot> </slot>
     </div>
     <PublicSearchContainer @out-click="handleSearchState" :Show="SearchState" :Search="search"/>
+    
   </div>
+  
 
 </template>

@@ -13,7 +13,7 @@ const props = defineProps<ContentItemProps>()
 const router = useRouter()
 
 const toLink = computed(() => {
-    return `${props.typeMedia}/query/${props.query.query}`
+    return `/${props.typeMedia}/query/${props.query.query}`
 })
 
 const list = await getListMedia(props.typeMedia, props.query.query, 1)

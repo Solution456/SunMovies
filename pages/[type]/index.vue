@@ -33,12 +33,8 @@ useHead({
             <div class="page_body w-full py-14">
                 <div>
                     <div class="container_inner">
-                        <ClientOnly>
-                            <template #fallback>
-                                <PublicLoadersSkeletonImage />
-                            </template>
-                            <HomeBanner :type="typeMedia" :item="trendMedia.results[0]" />
-                        </ClientOnly>
+
+                        <HomeBanner :type="typeMedia" :item="trendMedia.results[0]" />
 
                         <HomeContentItem v-for="query in queries" :key="query.query" :query="query"
                             :type-media="typeMedia" />

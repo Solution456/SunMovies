@@ -15,7 +15,9 @@ interface MovieCardProps {
 
 const props = defineProps<MovieCardProps>()
 
-const router = useRouter()
+const route = computed(() => {
+    return `/${props.type}/${props.id}`
+})
 
 
 
@@ -24,9 +26,7 @@ const router = useRouter()
 
 <template>
     <div class="w-[200px]">
-
-
-        <NuxtLink :to="`${props.type}/${props.id}`"
+        <NuxtLink :to="route"
             class="CarouselCard group relative block box-border w-full cursor-pointer bg-transparent rounded-md">
             <div class="CarouselCard_container overflow-hidden relative flex flex-auto max-w-full">
                 <div class="pb-[150%]"></div>
