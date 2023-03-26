@@ -40,7 +40,7 @@ const clickHandle = async (item:Media) => {
     <div class="movie relative max-w-full flex flex-col md:w-full md:block  h-full ">
         <div :style="`background-image:url(${apiURL.originalImage(props.item.backdrop_path)})`"
             class="movie_bg bg-cover bg-center absolute z-0 top-0 h-[600px] w-full"></div>
-        <div class="movie_bg__fade absolute w-full h-[600px] z-0"></div>
+        <div class="movie_bg__fade absolute w-full h-[610px] z-0"></div>
 
         <div class="movie__content md:max-w-[1076px] mx-auto w-full pt-24 relative">
             <div class="movie__content--left ">
