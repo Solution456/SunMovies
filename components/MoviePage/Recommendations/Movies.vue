@@ -20,8 +20,8 @@ const recommendationsList = computed(() => {
         <div class="reccommendations__title text-lg mb-4">
             Recommendations
         </div>
-        <div class="recommendations__items grid grid-cols-2 gap-2 xs:flex overflow-hidden">
-            <div v-for="recommendation in recommendationsList" :key="recommendation.id" class="item w-full">
+        <div class="recommendations__items grid grid-cols-2 gap-2 xs:flex xs:flex-wrap overflow-hidden">
+            <div v-for="recommendation in recommendationsList" :key="recommendation.id" class="item xs:w-28 xs:max-w-[50%] flex-grow-0 flex-shrink-0 basis-auto">
                 <MoviePageRecommendationsCard  :item="recommendation" :type="props.type"/>
             </div>
             

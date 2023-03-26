@@ -69,7 +69,7 @@ const clickHandle = async (item:Media) => {
                                 <PublicChip v-for="genre in props.item.genres">{{ genre.name }}</PublicChip>
                             </div>
                             <div class="description text-sm font-light mt-4">{{ props.item.overview }}</div>
-                            <div class="credits flex gap-2 mt-10">
+                            <div class="credits flex flex-col xs:flex-row gap-2 mt-10">
                                 <MoviePageCreditsCard v-for="credit in creditsList" :key="credit.id"
                                     :charecters="credit.character" :id="credit.id" :name="credit.name"
                                     :photo="credit.profile_path" />
