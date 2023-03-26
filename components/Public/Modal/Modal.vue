@@ -28,7 +28,7 @@ defineExpose({
     <Teleport to="body">
         <Transition :name="props.transition">
             <div v-show="isModalShown"
-                class="modal z-[202] flex items-center h-full justify-center inset-0 fixed transition w-full"
+                class="modal z-[202] flex items-center h-full justify-center inset-0 fixed transition w-full will-change-transform"
                 :class="[{ 'pointer-events-auto bg-[rgba(0,0,0,0.4)] .p-component-overlay-enter': isModalShown }]">
                 <div class="modal-inner box-border shadow-md"
                     :class="[{ 'h-screen w-screen max-h-full': props.fullscreen }, { 'max-h-[90%] w-[50vw]': !props.fullscreen }]">
@@ -75,22 +75,22 @@ defineExpose({
 
 
 
-.default-enter-active,
-.default-leave-active {
+.default-enter-active .modal-inner,
+.default-leave-active .modal-inner{
     transition: all 0.3s ease-in-out;
 }
 
-.default-enter-from,
-.default-leave-to {
+.default-enter-from .modal-inner,
+.default-leave-to .modal-inner {
     transform: translateX(30px);
     opacity: 0;
 }
 
-.bounce-enter-active {
+.bounce-enter-active .modal-inner {
     animation: bounce-in 0.5s;
 }
 
-.bounce-leave-active {
+.bounce-leave-active .modal-inner{
     animation: bounce-in 0.5s reverse;
 }
 
