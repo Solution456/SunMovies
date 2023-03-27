@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { NAV_ROUTES } from '@/constants/routes'
 
+import SearchIcon from '@heroicons/vue/24/outline/MagnifyingGlassIcon'
+
 
 interface navigationProps {
     SearchActive: boolean,
@@ -84,7 +86,7 @@ onMounted(() => {
                 <div v-if="props.SearchActive"
                     class="search-container max-w-[300px] xs:max-w-[600px] m-auto flex flex-grow flex-shrink-0 basis-auto">
                     <div class="content flex-grow flex-shrink-0 basis-0 max-w-full">
-                        <PublicInput name="search" v-model="search" icon="search" />
+                        <PublicInput :start-icon="SearchIcon" name="search" v-model="search"/>
                     </div>
                 </div>
 
