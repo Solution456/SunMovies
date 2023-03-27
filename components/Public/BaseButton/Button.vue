@@ -6,6 +6,7 @@ export type ButtonSize = 'sm' | 'md'
 interface buttonProps {
     variant?: ButtonVariant,
     loading?: boolean,
+    icon?:boolean
     size?: ButtonSize
     onClick?: () => void
 }
@@ -18,7 +19,7 @@ withDefaults(defineProps<buttonProps>(), {
 </script>
 
 <template>
-    <button @click="onClick" class="button inline-flex rounded-md items-center border-[1.5px] justify-center w-full transition shadow-sm" :class="[
+    <button @click="onClick" class="button inline-flex items-center border-[1.5px] justify-center transition shadow-sm" :class="[
         {
             'min-h-[40px] py-2 px-4': size === 'md',
             'py-1 px-3': size === 'sm'
@@ -26,16 +27,20 @@ withDefaults(defineProps<buttonProps>(), {
         {
             'border-yellow-300 bg-yellow-300 text-white hover:bg-white hover:text-black hover:border-yellow-400': variant === 'contained',
             'border-yellow-300 hover:border-yellow-400': variant === 'outlined'
+        },
+        {
+            'rounded-full !p-0 w-12 h-12':icon,
+            'rounded-md w-full':!icon
         }
     ]" :disabled="loading">
         <div v-if="!loading">
-            <slot class="start_end-icon" name="start-icon"></slot>
+            <slot name="start-icon"></slot>
 
             <div
                 class="button__content  overflow-hidden text-ellipsis whitespace-nowrap font-poppins font-semibold text-lg uppercase flex items-center justify-center flex-auto">
-                <slot>button</slot>
+                <slot></slot>
             </div>
-            <slot class="button_end-icon" name="end-icon"></slot>
+            <slot name="end-icon"></slot>
         </div>
         <div v-else>
             <svg aria-hidden="true" class="inline w-4 h-4 mr-2 text-white animate-spin fill-yellow-300"

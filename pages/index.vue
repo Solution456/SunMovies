@@ -3,7 +3,7 @@ import PublicModal from '~~/components/Public/Modal/Modal.vue';
 
 import { QUERY_LIST } from '~~/constants/lists';
 
-import type { Genre, MediaType } from '~~/types';
+import type { MediaType } from '~~/types';
 
 
 
@@ -48,7 +48,6 @@ const openModal = () => {
                 <div class="wrap">
                     <div class="home pt-10">
                         <div class="home_inner">
-                            <button @click="openModal">MODAL</button>
                             <HomeBanner :type="typeMedia" :item="trending.results[0]" />
                             <HomeFavouriteGenresItem v-if="FavouriteGenresList.length > 0" typeMedia="movie"
                                 :genres="FavouriteGenresList" />
