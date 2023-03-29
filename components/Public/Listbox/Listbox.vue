@@ -17,7 +17,6 @@ const props = defineProps<ListBoxProps>()
 
 const selectedOptionsLocal = ref<string[]>(props.selectedOptions)
 
-
 const emit = defineEmits<ListBoxEmits>()
 
 watch(selectedOptionsLocal, (newSelectedOptionsLocal) => {

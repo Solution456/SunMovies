@@ -7,6 +7,7 @@ import { QUERY_LIST } from '~~/constants/lists';
 
 
 import type { MediaType } from '~~/types';
+import type {SelectOption} from '~~/components/Public/Select/Select.vue'
 
 
 definePageMeta({
@@ -19,6 +20,24 @@ definePageMeta({
 const route = useRoute()
 const refDrawer = ref<InstanceType<typeof PublicDrawer> | null>(null)
 
+const options = [
+    {
+        label:'Test1',
+        value:'0'
+    },
+    {
+        label:'Test2',
+        value:'1'
+    }
+]
+const selectedValue = ref<SelectOption[]>([])
+
+const setSelectedValue = (value:SelectOption[]) => {
+    console.log(value)
+    selectedValue.value = value
+}
+
+
 const typeMedia = computed(() => route.params.type as MediaType || 'movie')
 
 const queries = computed(() => QUERY_LIST[typeMedia.value])
@@ -26,7 +45,6 @@ const queries = computed(() => QUERY_LIST[typeMedia.value])
 const trendMedia = await getTrending(typeMedia.value)
 
 const openDrawer = () => {
-    console.log('@@')
     refDrawer.value?.openClose()
 }
 useHead({
@@ -38,7 +56,13 @@ useHead({
 
 <template>
     <NuxtLayout name="page">
-        <PublicDrawer ref="refDrawer"></PublicDrawer>
+        <PublicDrawer ref="refDrawer">
+            <template #content>
+                <div class="media-filters grid">
+                    <PublicSelect :value="selectedValue" @on-change="setSelectedValue" multiple :options="options"></PublicSelect>
+                </div>
+            </template>
+        </PublicDrawer>
         <div class="px-4 md:max-w-[1076px] xs:max-w-[614px] flex gap-2 h-full mx-auto my-0 relative">
             <div class="page_body w-full py-14">
                 <div>
@@ -50,7 +74,7 @@ useHead({
                 </div>
             </div>
         </div>
-        <PublicBaseButton :onClick="openDrawer" class="xs:hidden fixed z-[100] left-0 bottom-0 mt-4 mr-4 mb-2 ml-4" icon>
+        <PublicBaseButton icon :onClick="openDrawer" class="xs:hidden fixed z-[100] left-0 bottom-0 mt-4 mr-4 mb-2 ml-4">
             <AdjustmentsVerticalIcon class="w-5 h-5" />
         </PublicBaseButton>
     </NuxtLayout>
