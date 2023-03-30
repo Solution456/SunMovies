@@ -7,7 +7,7 @@ export type SelectOption = {
 }
 
 interface emitProps {
-    (e: 'onChange', value: SelectOption | SelectOption[] | undefined): void
+    (e: 'onChange', value: SelectOption | SelectOption[] | null): void
 }
 
 
@@ -15,7 +15,7 @@ interface SelectProps {
     multiple?: boolean
     label?: string
     options: SelectOption[]
-    value: SelectOption | SelectOption[] | undefined
+    value: SelectOption | SelectOption[] | null
 }
 
 
@@ -26,8 +26,6 @@ const emit = defineEmits<emitProps>()
 
 const open = ref(false)
 const localValues = ref(props.value)
-
-
 
 
 const selectOption = (option: SelectOption) => {
@@ -51,7 +49,7 @@ const removeOption = (ind: number) => {
         (localValues.value as SelectOption[]).splice(ind, 1)
         emit('onChange', localValues.value)
     }else
-        localValues.value = undefined
+        localValues.value = null
 }
 
 const isOptionSelected = (option: SelectOption) => {
@@ -61,11 +59,11 @@ const isOptionSelected = (option: SelectOption) => {
 
 <template>
     <div class="relative">
-        <div>
+        <div class="mb-1">
             <span class="text-sm text-gray-400">{{ label }}</span>
         </div>
         <button type="button" :tabindex="0" @click="open = !open"
-            class="relative w-full cursor-pointer min-h-[2em] rounded-md bg-[#15141b] py-1 px-3.5 text-left text-gray-400 shadow-sm ring-0 ring-inset ring-gray-300  sm:text-sm sm:leading-6"
+            class="relative w-full cursor-pointer min-h-[2em] rounded-md bg-[#1c1b24] py-2 px-3.5 text-left text-gray-400 shadow-sm ring-0 ring-inset ring-gray-300  sm:text-sm sm:leading-6"
             aria-haspopup="listbox" :aria-expanded="open">
             <template v-if="multiple">
                 <div class="flex flex-wrap gap-2" v-if="(props.value as SelectOption[]).length > 0">

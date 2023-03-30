@@ -9,6 +9,11 @@ import { QUERY_LIST } from '~~/constants/lists';
 import type { MediaType } from '~~/types';
 import type { SelectOption } from '~~/components/Public/Select/Select.vue'
 
+interface filterForm{
+    selectedGenres:SelectOption[]
+    selectedType:SelectOption | null
+    year:number
+}
 
 definePageMeta({
     key: route => route.fullPath,
@@ -20,20 +25,33 @@ definePageMeta({
 const route = useRoute()
 const refDrawer = ref<InstanceType<typeof PublicDrawer> | null>(null)
 
-const options = [
+
+const typeOptions = [
     {
-        label: 'Test1',
-        value: '0'
+        name:'Movie',
+        value:'movie'
     },
     {
-        label: 'Test2',
-        value: '1'
+        name:'TvShow',
+        value:'tv'
     }
 ]
-const selectedValue = ref<SelectOption[]>([])
 
-const setSelectedValue = (value: SelectOption[] | SelectOption | undefined) => {
-    selectedValue.value = (value as typeof selectedValue.value)
+
+
+const form = ref<filterForm>({
+    selectedGenres:[],
+    selectedType:null,
+    year:0
+})
+
+const selectedGenres= ref<SelectOption[]>([])
+
+const setSelectedGenres = (value: SelectOption[] | SelectOption | null) => {
+    form.value.selectedGenres = (value as typeof form.value.selectedGenres)
+}
+const setSelectedType = (value: SelectOption[] | SelectOption | null) => {
+    form.value.selectedType = (value as SelectOption)
 }
 
 
@@ -63,9 +81,12 @@ useHead({
     <NuxtLayout name="page">
         <PublicDrawer ref="refDrawer">
             <template #content>
-                <div class="media-filters grid">
-                    <PublicSelect :label="`Genre`" :value="selectedValue" @on-change="setSelectedValue" multiple
-                        :options="genres"></PublicSelect>
+                <div class="media-filters grid w-full">
+                    <PublicSelect :label="`Genre`" :value="form.selectedGenres" @on-change="setSelectedGenres" multiple
+                        :options="genres" />
+                    <PublicSelect :label="`Type`" :value="form.selectedType" @on-change="setSelectedType"
+                        :options="typeOptions" />
+                    <PublicFromToInput Label="Years"/>
                 </div>
             </template>
         </PublicDrawer>

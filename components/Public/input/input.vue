@@ -45,6 +45,7 @@ const inputHandler = (event: Event) => {
             </div>
             <input :type="props.type" :id="props.name" :value="props.modelValue" @input="inputHandler"
                 class="bg-transparent border border-yellow-300 text-white text-sm rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full pl-10 p-2.5"
+                :class="[startIcon ? 'pl-10':'pl-4', endIcon?'pr-10':'']"
                 :placeholder="props.placeholder" :name="props.name">
             <div v-if="endIcon"
                 class="text-yellow-300 absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
