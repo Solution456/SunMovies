@@ -13,8 +13,9 @@ interface emitProps {
 
 interface SelectProps {
     multiple?: boolean
+    label?: string
     options: SelectOption[]
-    value: SelectOption | SelectOption[]
+    value: SelectOption | SelectOption[] | undefined
 }
 
 
@@ -33,8 +34,8 @@ const selectOption = (option: SelectOption) => {
     if (props.multiple) {
         if ((localValues.value as SelectOption[]).includes(option)) {
             const ind = (localValues.value as SelectOption[]).indexOf(option)
-            if(ind < 0) return
-            (localValues.value as SelectOption[]).splice(ind,1)
+            if (ind < 0) return
+            (localValues.value as SelectOption[]).splice(ind, 1)
             emit('onChange', localValues.value)
         } else {
             (localValues.value as SelectOption[]).push(option)
@@ -45,6 +46,14 @@ const selectOption = (option: SelectOption) => {
     }
 }
 
+const removeOption = (ind: number) => {
+    if (props.multiple) {
+        (localValues.value as SelectOption[]).splice(ind, 1)
+        emit('onChange', localValues.value)
+    }else
+        localValues.value = undefined
+}
+
 const isOptionSelected = (option: SelectOption) => {
     return props.multiple ? (props.value as SelectOption[]).includes(option) : option === props.value
 }
@@ -52,14 +61,31 @@ const isOptionSelected = (option: SelectOption) => {
 
 <template>
     <div class="relative">
+        <div>
+            <span class="text-sm text-gray-400">{{ label }}</span>
+        </div>
         <button type="button" :tabindex="0" @click="open = !open"
             class="relative w-full cursor-pointer min-h-[2em] rounded-md bg-[#15141b] py-1 px-2 text-left text-gray-400 shadow-sm ring-0 ring-inset ring-gray-300  sm:text-sm sm:leading-6"
             aria-haspopup="listbox" :aria-expanded="open">
             <template v-if="multiple">
-                <span v-for="value of (props.value as SelectOption[])" :key="value.value">{{ value.label }}</span>
+                <div v-if="(props.value as SelectOption[]).length > 0">
+                    <PublicSelectBadge @remove-option="removeOption(index)" v-for="(value, index) of (props.value as SelectOption[])"
+                        :key="value.value">
+                        {{ value.label }}
+                    </PublicSelectBadge>
+                </div>
+                <span v-else class="text-xs text-gray-500">
+                    Choose {{ label }}
+                </span>
             </template>
+
             <template v-else>
-                {{ (props.value as SelectOption).label }}
+                <span v-if="props.value">
+                    {{ (props.value as SelectOption).label }}
+                </span>
+                <span v-else class="text-xs text-gray-500">
+                    Choose {{ label }}
+                </span>
             </template>
             <span class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
                 <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -76,7 +102,7 @@ const isOptionSelected = (option: SelectOption) => {
             <li @click="$event => {
                 open = true
                 $event.stopPropagation()
-                selectOption(option)   
+                selectOption(option)
             }" v-for="(option, index) of options" :key="option.value"
                 class="relative cursor-pointer select-none py-2 px-3"
                 :class="[isOptionSelected(option) ? 'bg-yellow-300 text-white' : '']" :id="`listbox-option-${index}`"

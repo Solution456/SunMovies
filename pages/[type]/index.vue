@@ -58,7 +58,7 @@ useHead({
         <PublicDrawer ref="refDrawer">
             <template #content>
                 <div class="media-filters grid">
-                    <PublicSelect :value="selectedValue" @on-change="setSelectedValue" multiple :options="options"></PublicSelect>
+                    <PublicSelect :label="`Genre`" :value="selectedValue" @on-change="setSelectedValue" multiple :options="options"></PublicSelect>
                 </div>
             </template>
         </PublicDrawer>
