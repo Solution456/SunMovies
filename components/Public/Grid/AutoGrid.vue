@@ -67,7 +67,7 @@ else {
             <PublicLoadersSpinner v-if="isLoading" />
         </template>
 
-        <div v-else class="w-full h-screen flex justify-center items-center">
+        <div v-else-if="!isLoading" class="w-full h-screen flex justify-center items-center">
             <div class="w-full  flex flex-col justify-center items-center min-h-[200px] rounded-md shadow-lg bg-gray-400 bg-opacity-10">
                 <p class="text-2xl">
                     Sorry nothing <span class="text-yellow-300">was found</span> 😭

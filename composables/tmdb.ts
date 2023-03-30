@@ -1,7 +1,7 @@
 import {fetch} from '~~/helpers/api/index'
 
 
-import type { Media, MediaType, PageResult } from "~~/types";
+import type { FilterQuery, Media, MediaType, PageResult } from "~~/types";
 
 
 
@@ -38,6 +38,17 @@ export const searchTMDB = (query: string, page = 1):Promise<PageResult<Media>> =
 export const getMediaByGenres = (media: string, genres: string, page = 1):Promise<PageResult<Media>> => {
   return fetch(`tmdb/discover/${media}`, {
     with_genres: genres,
+    page
+  })
+}
+
+export const getMediaByFilters = (media: string, query:FilterQuery, page = 1):Promise<PageResult<Media>> => {
+  let q = {
+
+  }
+  
+  return fetch(`tmdb/discover/${media}`, {
+    ...query,
     page
   })
 }

@@ -75,11 +75,12 @@ const setSelectedYears = (value: FromToFilterType) => {
 
 
 const searchRedirect = ()=> {
+    openDrawer()
     let query = {}
     if(form.value.year.from > 0 && form.value.year.to > 0){
         query = {
-            release_date_gte:form.value.year.from,
-            release_date_lte:form.value.year.to,
+            'release_date.gte':form.value.year.from.toString(),
+            'release_date.lte':form.value.year.to.toString(),
             with_genres:genresArr.value.join(',')
         }
     }else {

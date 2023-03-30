@@ -147,4 +147,10 @@ export interface Media {
     length:number
   }
 
+  export interface FilterQuery {
+    'release_date.gte'?:string
+    'release_date.lte'?:string
+    with_genres?:string
+  }
+
 
