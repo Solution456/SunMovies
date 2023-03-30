@@ -1,6 +1,10 @@
 <script setup lang="ts">
 
 
+const props = defineProps<{
+    onClick?: () => void
+}>()
+
 const isShown = ref(false)
 
 
@@ -28,7 +32,7 @@ defineExpose({
             <slot name="content"></slot>
         </div>
         <div class="drawer__action mt-4">
-            <PublicBaseButton size="sm">Search</PublicBaseButton>
+            <PublicBaseButton @click="onClick" size="sm">Search</PublicBaseButton>
         </div>
     </aside>
     <div v-show="isShown" @click="openClose" drawer-backdrop class="bg-[rgba(0,0,0,0.4)] fixed inset-0 z-[121]"/>

@@ -63,6 +63,10 @@ const setSelectedYears = (value: FromToFilterType) => {
     form.value.year = value
 }
 
+const searchRedirect = ()=> {
+
+}
+
 
 const typeMedia = computed(() => route.params.type as MediaType || 'movie')
 
@@ -88,7 +92,7 @@ useHead({
 
 <template>
     <NuxtLayout name="page">
-        <PublicDrawer ref="refDrawer">
+        <PublicDrawer :on-click="searchRedirect" ref="refDrawer">
             <template #content>
                 <div class="media-filters grid w-full">
                     <PublicSelect :label="`Genre`" :value="form.selectedGenres" @on-change="setSelectedGenres" multiple
