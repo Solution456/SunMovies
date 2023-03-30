@@ -32,7 +32,6 @@ const handleEmit = (value: string[]) => {
 
 
 const openModal = () => {
-    console.log('@@')
     modal.value?.openClose()
 }
 

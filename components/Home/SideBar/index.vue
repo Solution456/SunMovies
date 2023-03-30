@@ -12,8 +12,6 @@ const emit = defineEmits<{
     (e: 'update', value:string[]):void
 }>()
 
-const dropdownOptions = ["Today", "Weak", "Month"];
-
 const scrollWrapper = ref<HTMLDivElement>()
 useScrollbar(scrollWrapper)
 

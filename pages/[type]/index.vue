@@ -27,6 +27,7 @@ definePageMeta({
     },
 })
 
+const router = useRouter()
 const route = useRoute()
 const refDrawer = ref<InstanceType<typeof PublicDrawer> | null>(null)
 
@@ -52,8 +53,16 @@ const form = ref<filterForm>({
         to:0
     }
 })
+
+const genresArr = computed(() => {
+    return form.value.selectedGenres.map((item) => {
+        return item?.id
+    })
+})
+
 const setSelectedGenres = (value: SelectOption[] | SelectOption | null) => {
     form.value.selectedGenres = (value as typeof form.value.selectedGenres)
+    console.log(form.value.selectedGenres)
 }
 const setSelectedType = (value: SelectOption[] | SelectOption | null) => {
     form.value.selectedType = (value as SelectOption)
@@ -63,8 +72,27 @@ const setSelectedYears = (value: FromToFilterType) => {
     form.value.year = value
 }
 
-const searchRedirect = ()=> {
 
+
+const searchRedirect = ()=> {
+    let query = {}
+    if(form.value.year.from > 0 && form.value.year.to > 0){
+        query = {
+            release_date_gte:form.value.year.from,
+            release_date_lte:form.value.year.to,
+            with_genres:genresArr.value.join(',')
+        }
+    }else {
+        query = {
+            with_genres:genresArr.value.join(',')
+        }
+    }
+    router.push({
+        path:`/${form.value.selectedType?.value}/filter`,
+        query:{
+            ...query
+        }
+    })
 }
 
 
