@@ -9,10 +9,15 @@ import { QUERY_LIST } from '~~/constants/lists';
 import type { MediaType } from '~~/types';
 import type { SelectOption } from '~~/components/Public/Select/Select.vue'
 
-interface filterForm{
-    selectedGenres:SelectOption[]
-    selectedType:SelectOption | null
-    year:number
+export type FromToFilterType = {
+    from: number
+    to: number
+}
+
+interface filterForm {
+    selectedGenres: SelectOption[]
+    selectedType: SelectOption | null
+    year: FromToFilterType
 }
 
 definePageMeta({
@@ -28,30 +33,34 @@ const refDrawer = ref<InstanceType<typeof PublicDrawer> | null>(null)
 
 const typeOptions = [
     {
-        name:'Movie',
-        value:'movie'
+        name: 'Movie',
+        value: 'movie'
     },
     {
-        name:'TvShow',
-        value:'tv'
+        name: 'TvShow',
+        value: 'tv'
     }
 ]
 
 
 
 const form = ref<filterForm>({
-    selectedGenres:[],
-    selectedType:null,
-    year:0
+    selectedGenres: [],
+    selectedType: null,
+    year: {
+        from:0,
+        to:0
+    }
 })
-
-const selectedGenres= ref<SelectOption[]>([])
-
 const setSelectedGenres = (value: SelectOption[] | SelectOption | null) => {
     form.value.selectedGenres = (value as typeof form.value.selectedGenres)
 }
 const setSelectedType = (value: SelectOption[] | SelectOption | null) => {
     form.value.selectedType = (value as SelectOption)
+}
+
+const setSelectedYears = (value: FromToFilterType) => {
+    form.value.year = value
 }
 
 
@@ -86,7 +95,7 @@ useHead({
                         :options="genres" />
                     <PublicSelect :label="`Type`" :value="form.selectedType" @on-change="setSelectedType"
                         :options="typeOptions" />
-                    <PublicFromToInput Label="Years"/>
+                    <PublicFromToInput @update-values="setSelectedYears" :values="form.year" Label="Years" />
                 </div>
             </template>
         </PublicDrawer>

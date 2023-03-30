@@ -12,7 +12,7 @@ interface inputProps {
     label?: string
     placeholder?: string
     type?: 'password' | 'text' | 'number'
-    modelValue?: string
+    modelValue?: string | number
 }
 
 const props = withDefaults(defineProps<inputProps>(), {
@@ -43,7 +43,7 @@ const inputHandler = (event: Event) => {
                 class="text-yellow-300 absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <component class="w-5 h-5" :is="startIcon" />
             </div>
-            <input :type="props.type" :id="props.name" :value="props.modelValue" @input="inputHandler"
+            <input :type="props.type" :id="props.name"  @input="inputHandler"
                 class="bg-transparent border border-yellow-300 text-white text-sm rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full pl-10 p-2.5"
                 :class="[startIcon ? 'pl-10':'pl-4', endIcon?'pr-10':'']"
                 :placeholder="props.placeholder" :name="props.name">
