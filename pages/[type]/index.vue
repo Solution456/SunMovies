@@ -32,9 +32,8 @@ const options = [
 ]
 const selectedValue = ref<SelectOption[]>([])
 
-const setSelectedValue = (value:SelectOption[]) => {
-    console.log(value)
-    selectedValue.value = value
+const setSelectedValue = (value:SelectOption[] | SelectOption | undefined) => {
+    selectedValue.value = (value as typeof selectedValue.value)
 }
 
 

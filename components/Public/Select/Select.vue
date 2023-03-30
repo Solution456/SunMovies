@@ -17,6 +17,7 @@ interface SelectProps {
     value: SelectOption | SelectOption[]
 }
 
+
 const props = withDefaults(defineProps<SelectProps>(), {
     multiple: false
 })
@@ -25,21 +26,18 @@ const emit = defineEmits<emitProps>()
 const open = ref(false)
 const localValues = ref(props.value)
 
-console.log(props.value)
+
 
 
 const selectOption = (option: SelectOption) => {
     if (props.multiple) {
         if ((localValues.value as SelectOption[]).includes(option)) {
-            
             const ind = (localValues.value as SelectOption[]).indexOf(option)
             if(ind < 0) return
             (localValues.value as SelectOption[]).splice(ind,1)
-            console.log('delete',localValues.value)
             emit('onChange', localValues.value)
         } else {
             (localValues.value as SelectOption[]).push(option)
-            console.log(localValues.value)
             emit('onChange', localValues.value)
         }
     } else {
