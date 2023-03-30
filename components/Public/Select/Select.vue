@@ -2,8 +2,8 @@
 
 
 export type SelectOption = {
-    label: string,
-    value: any
+    name: string,
+    [value:string]: any
 }
 
 interface emitProps {
@@ -65,13 +65,13 @@ const isOptionSelected = (option: SelectOption) => {
             <span class="text-sm text-gray-400">{{ label }}</span>
         </div>
         <button type="button" :tabindex="0" @click="open = !open"
-            class="relative w-full cursor-pointer min-h-[2em] rounded-md bg-[#15141b] py-1 px-2 text-left text-gray-400 shadow-sm ring-0 ring-inset ring-gray-300  sm:text-sm sm:leading-6"
+            class="relative w-full cursor-pointer min-h-[2em] rounded-md bg-[#15141b] py-1 px-3.5 text-left text-gray-400 shadow-sm ring-0 ring-inset ring-gray-300  sm:text-sm sm:leading-6"
             aria-haspopup="listbox" :aria-expanded="open">
             <template v-if="multiple">
-                <div v-if="(props.value as SelectOption[]).length > 0">
+                <div class="flex flex-wrap gap-2" v-if="(props.value as SelectOption[]).length > 0">
                     <PublicSelectBadge @remove-option="removeOption(index)" v-for="(value, index) of (props.value as SelectOption[])"
                         :key="value.value">
-                        {{ value.label }}
+                        {{ value.name }}
                     </PublicSelectBadge>
                 </div>
                 <span v-else class="text-xs text-gray-500">
@@ -81,7 +81,7 @@ const isOptionSelected = (option: SelectOption) => {
 
             <template v-else>
                 <span v-if="props.value">
-                    {{ (props.value as SelectOption).label }}
+                    {{ (props.value as SelectOption).name}}
                 </span>
                 <span v-else class="text-xs text-gray-500">
                     Choose {{ label }}
@@ -107,7 +107,7 @@ const isOptionSelected = (option: SelectOption) => {
                 class="relative cursor-pointer select-none py-2 px-3"
                 :class="[isOptionSelected(option) ? 'bg-yellow-300 text-white' : '']" :id="`listbox-option-${index}`"
                 role="option">
-                {{ option.label }}
+                {{ option.name }}
             </li>
         </ul>
     </div>

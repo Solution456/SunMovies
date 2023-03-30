@@ -7,7 +7,7 @@ import { QUERY_LIST } from '~~/constants/lists';
 
 
 import type { MediaType } from '~~/types';
-import type {SelectOption} from '~~/components/Public/Select/Select.vue'
+import type { SelectOption } from '~~/components/Public/Select/Select.vue'
 
 
 definePageMeta({
@@ -22,17 +22,17 @@ const refDrawer = ref<InstanceType<typeof PublicDrawer> | null>(null)
 
 const options = [
     {
-        label:'Test1',
-        value:'0'
+        label: 'Test1',
+        value: '0'
     },
     {
-        label:'Test2',
-        value:'1'
+        label: 'Test2',
+        value: '1'
     }
 ]
 const selectedValue = ref<SelectOption[]>([])
 
-const setSelectedValue = (value:SelectOption[] | SelectOption | undefined) => {
+const setSelectedValue = (value: SelectOption[] | SelectOption | undefined) => {
     selectedValue.value = (value as typeof selectedValue.value)
 }
 
@@ -41,7 +41,13 @@ const typeMedia = computed(() => route.params.type as MediaType || 'movie')
 
 const queries = computed(() => QUERY_LIST[typeMedia.value])
 
-const trendMedia = await getTrending(typeMedia.value)
+
+const [trendMedia, genres] = await Promise.all([
+    getTrending(typeMedia.value),
+    getGenreList(typeMedia.value)
+])
+
+
 
 const openDrawer = () => {
     refDrawer.value?.openClose()
@@ -58,7 +64,8 @@ useHead({
         <PublicDrawer ref="refDrawer">
             <template #content>
                 <div class="media-filters grid">
-                    <PublicSelect :label="`Genre`" :value="selectedValue" @on-change="setSelectedValue" multiple :options="options"></PublicSelect>
+                    <PublicSelect :label="`Genre`" :value="selectedValue" @on-change="setSelectedValue" multiple
+                        :options="genres"></PublicSelect>
                 </div>
             </template>
         </PublicDrawer>
