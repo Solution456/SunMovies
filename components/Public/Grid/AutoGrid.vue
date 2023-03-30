@@ -13,6 +13,8 @@ const props = defineProps<AutoGridProps>()
 
 const autoLoadElement = ref<HTMLDivElement>()
 
+const router = useRouter()
+
 const isLoading = ref(false)
 const error = ref<unknown>()
 let page = 0
@@ -57,10 +59,25 @@ else {
 
 <template>
     <div>
-        <PublicGrid>
-            <PublicMediaCard v-for="item of props.items" :key="item.id" :type="props.type" :item="item" />
-        </PublicGrid>
-        <div ref="autoLoadElement" />
-        <PublicLoadersSpinner v-if="isLoading" />
+        <template v-if="props.items.length > 0">
+            <PublicGrid>
+                <PublicMediaCard v-for="item of props.items" :key="item.id" :type="props.type" :item="item" />
+            </PublicGrid>
+            <div ref="autoLoadElement" />
+            <PublicLoadersSpinner v-if="isLoading" />
+        </template>
+
+        <div v-else class="w-full h-screen flex justify-center items-center">
+            <div class="w-full  flex flex-col justify-center items-center min-h-[200px] rounded-md shadow-lg bg-gray-400 bg-opacity-10">
+                <p class="text-2xl">
+                    Sorry nothing <span class="text-yellow-300">was found</span> 😭
+                </p>
+                <div class="mt-2">
+                    <PublicBaseButton :on-click="router.back">
+                        Go back
+                    </PublicBaseButton>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
