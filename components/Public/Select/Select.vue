@@ -30,9 +30,11 @@ console.log(props.value)
 
 const selectOption = (option: SelectOption) => {
     if (props.multiple) {
-        if ((props.value as SelectOption[]).includes(option)) {
+        if ((localValues.value as SelectOption[]).includes(option)) {
             
-            localValues.value = toRaw((localValues.value as SelectOption[]).filter(o => o.value !== option.value))
+            const ind = (localValues.value as SelectOption[]).indexOf(option)
+            if(ind < 0) return
+            (localValues.value as SelectOption[]).splice(ind,1)
             console.log('delete',localValues.value)
             emit('onChange', localValues.value)
         } else {
