@@ -3,20 +3,20 @@ import type { FromToFilterType } from '~~/pages/[type]/index.vue';
 
 
 const props = defineProps<{
-    Label:string
-    values:FromToFilterType
+    Label: string
+    values: FromToFilterType
 }>()
 
 const emit = defineEmits<{
-    (event:'update-values',value:FromToFilterType):void
+    (event: 'update-values', value: FromToFilterType): void
 }>()
 
 const localValues = ref(props.values)
 
 
 watchEffect(() => {
-    if(localValues.value.from > 0 && localValues.value.to>0){
-        emit('update-values',localValues.value)
+    if (localValues.value.from > 0 && localValues.value.to > 0) {
+        emit('update-values', localValues.value)
     }
 })
 
