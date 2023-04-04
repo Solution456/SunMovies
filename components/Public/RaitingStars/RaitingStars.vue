@@ -9,7 +9,7 @@ const props = defineProps<raitingProps>()
 </script>
 
 <template>
-    <span class="inline-flex items-center font-bold font-poppins text-[16px]">
+    <span class="inline-flex items-center bg-yellow-200 bg-opacity-30 font-bold font-poppins text-[16px] px-2 rounded-sm">
         <div class="flex items-center gap-1">
             <span class="stars__icon inline-flex items-center h-4 w-4 justify-center align-middle text-yellow-300">
                 <StarIcon class="h-full w-full" />

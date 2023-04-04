@@ -15,7 +15,7 @@ interface BannerProps {
 const props = defineProps<BannerProps>()
 const router = useRouter()
 
-const fadeColor = 'rgb(253, 211, 106)'
+const fadeColor = 'rgb(10, 10, 10)'
 
 
 
