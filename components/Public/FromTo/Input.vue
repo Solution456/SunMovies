@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import type { FromToFilterType } from '~~/pages/[type]/index.vue';
+export type FromToFilterType = {
+    from: number
+    to: number
+}
 
 
 const props = defineProps<{

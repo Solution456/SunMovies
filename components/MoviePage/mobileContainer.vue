@@ -81,6 +81,6 @@ const clickHandle = async (item:Media) => {
 
 <style scoped>
 .movie_bg__fade {
-    background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 40%, rgb(0, 0, 0) 50%);
+    background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 0%, rgb(0, 0, 0) 50%);
 }
 </style>

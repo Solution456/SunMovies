@@ -7,18 +7,7 @@ import { QUERY_LIST } from '~~/constants/lists';
 
 
 import type { MediaType } from '~~/types';
-import type { SelectOption } from '~~/components/Public/Select/Select.vue'
 
-export type FromToFilterType = {
-    from: number
-    to: number
-}
-
-interface filterForm {
-    selectedGenres: SelectOption[]
-    selectedType: SelectOption | null
-    year: FromToFilterType
-}
 
 definePageMeta({
     key: route => route.fullPath,
@@ -27,91 +16,21 @@ definePageMeta({
     },
 })
 
-const router = useRouter()
 const route = useRoute()
 const refDrawer = ref<InstanceType<typeof PublicDrawer> | null>(null)
 
 
-const typeOptions = [
-    {
-        name: 'Movie',
-        value: 'movie'
-    },
-    {
-        name: 'TvShow',
-        value: 'tv'
-    }
-]
-
-
-
-const form = ref<filterForm>({
-    selectedGenres: [],
-    selectedType: null,
-    year: {
-        from:0,
-        to:0
-    }
-})
-
-const genresArr = computed(() => {
-    return form.value.selectedGenres.map((item) => {
-        return item?.id
-    })
-})
-
-const setSelectedGenres = (value: SelectOption[] | SelectOption | null) => {
-    form.value.selectedGenres = (value as typeof form.value.selectedGenres)
-    console.log(form.value.selectedGenres)
-}
-const setSelectedType = (value: SelectOption[] | SelectOption | null) => {
-    form.value.selectedType = (value as SelectOption)
-}
-
-const setSelectedYears = (value: FromToFilterType) => {
-    form.value.year = value
-}
-
-
-
-const searchRedirect = ()=> {
-    openDrawer()
-    let query = {}
-    if(form.value.year.from > 0 && form.value.year.to > 0){
-        query = {
-            'release_date.gte':form.value.year.from.toString(),
-            'release_date.lte':form.value.year.to.toString(),
-            with_genres:genresArr.value.join(',')
-        }
-    }else {
-        query = {
-            with_genres:genresArr.value.join(',')
-        }
-    }
-    router.push({
-        path:`/${form.value.selectedType?.value}/filter`,
-        query:{
-            ...query
-        }
-    })
-}
-
-
 const typeMedia = computed(() => route.params.type as MediaType || 'movie')
-
 const queries = computed(() => QUERY_LIST[typeMedia.value])
-
-
-const [trendMedia, genres] = await Promise.all([
-    getTrending(typeMedia.value),
-    getGenreList(typeMedia.value)
-])
-
-
 
 const openDrawer = () => {
     refDrawer.value?.openClose()
 }
+
+const trendMedia = await getTrending(typeMedia.value)
+
+
+
 useHead({
     title: typeMedia.value === 'movie' ? 'Movies' : 'TV Shows',
 })
@@ -121,15 +40,9 @@ useHead({
 
 <template>
     <NuxtLayout name="page">
-        <PublicDrawer :on-click="searchRedirect" ref="refDrawer">
+        <PublicDrawer ref="refDrawer">
             <template #content>
-                <div class="media-filters grid w-full">
-                    <PublicSelect :label="`Genre`" :value="form.selectedGenres" @on-change="setSelectedGenres" multiple
-                        :options="genres" />
-                    <PublicSelect :label="`Type`" :value="form.selectedType" @on-change="setSelectedType"
-                        :options="typeOptions" />
-                    <PublicFromToInput @update-values="setSelectedYears" :values="form.year" Label="Years" />
-                </div>
+                <PublicMediaFilters @redirect="openDrawer" :typeMedia="typeMedia" />
             </template>
         </PublicDrawer>
         <div class="px-4 md:max-w-[1076px] xs:max-w-[614px] flex gap-2 h-full mx-auto my-0 relative">
