@@ -1,22 +1,32 @@
 <script setup lang="ts">
+import { VNodeChild } from 'vue';
 
 
-export type SelectOption = {
-    name: string,
-    [value:string]: any
+
+export type ValueAtom = string | number
+export type Value = ValueAtom | string[] | number[] | ValueAtom[]
+
+interface SelectBaseOption<
+    V = string | number,
+    L = string | ((option: SelectBaseOption<V>, selected: boolean) => VNodeChild)
+> {
+    value: V
+    label?: L
 }
+type SelectOption = SelectBaseOption<string | number>
+
 
 interface emitProps {
-    (e: 'onChange', value: SelectOption | SelectOption[] | null): void
+    (e: 'update:value', value: Value | null): void
 }
-
 
 interface SelectProps {
     multiple?: boolean
     label?: string
-    options: SelectOption[]
-    value: SelectOption | SelectOption[] | null
+    options: SelectBaseOption[]
+    value: Value | null
 }
+
 
 
 const props = withDefaults(defineProps<SelectProps>(), {
@@ -25,36 +35,83 @@ const props = withDefaults(defineProps<SelectProps>(), {
 const emit = defineEmits<emitProps>()
 
 const open = ref(false)
-const localValues = ref(props.value)
+const sOptions = ref<SelectOption[]>([])
+const emptyArray: SelectOption[] = []
 
 
-const selectOption = (option: SelectOption) => {
+
+// const selectedOptionsRef = computed(() => {
+//     if (props.multiple) {
+//         const { value: values } = mergedValueRef
+//         if (!Array.isArray(values)) return []
+//         return getMergedOptions(values)
+//     }
+//     return null
+// })
+// const selectedOptionRef = computed<SelectOption | null>(() => {
+//     const { value: mergedValue } = mergedValueRef
+//     if (!props.multiple && !Array.isArray(mergedValue)) {
+//         if (mergedValue === null) return null
+//         return getMergedOptions([mergedValue])[0] || null
+//     }
+//     return null
+// })
+
+const handleToggleByOption = (option: SelectOption) => {
+
     if (props.multiple) {
-        if ((localValues.value as SelectOption[]).includes(option)) {
-            const ind = (localValues.value as SelectOption[]).indexOf(option)
-            if (ind < 0) return
-            (localValues.value as SelectOption[]).splice(ind, 1)
-            emit('onChange', localValues.value)
-        } else {
-            (localValues.value as SelectOption[]).push(option)
-            emit('onChange', localValues.value)
+        const ind = getOptionsIndex(option.value as NonNullable<SelectOption['value']>)
+        if (~ind) {
+            sOptions.value.splice(ind, 1)
         }
-    } else {
-        if (option !== props.value) emit('onChange', option)
+        else {
+            sOptions.value.push(option)
+        }
+        const changedValue = sOptions.value.map(val => {
+            return val.value
+        })
+        emit('update:value', changedValue)
+    }
+    else {
+        const OptionIndex = getOptionsIndex(option.value as NonNullable<SelectOption['value']>)
+        if (~OptionIndex) {
+            sOptions.value = emptyArray
+
+        } else {
+            sOptions.value = [option]
+        }
+        const val = sOptions.value[0]?.value ? sOptions.value[0].value as NonNullable<SelectOption['value']> : null
+        emit('update:value', val)
     }
 }
 
+const getOptionsIndex = (optionValue: string | number): number => {
+    let tmpOptions = sOptions.value
+    const ind = tmpOptions.findIndex(
+        (tmpOption) =>
+            (tmpOption.value as NonNullable<SelectOption['value']>) === optionValue
+    )
+    return ind
+}
+
+
+
 const removeOption = (ind: number) => {
     if (props.multiple) {
-        (localValues.value as SelectOption[]).splice(ind, 1)
-        emit('onChange', localValues.value)
-    }else
-        localValues.value = null
+        sOptions.value.splice(ind, 1)
+        const changedValue = sOptions.value.map(val => {
+            return val.value
+        })
+        emit('update:value', changedValue)
+    } else
+        sOptions.value = []
+    emit('update:value', null)
 }
 
 const isOptionSelected = (option: SelectOption) => {
-    return props.multiple ? (props.value as SelectOption[]).includes(option) : option === props.value
+    return props.multiple ? sOptions.value.includes(option) : option.value === props.value
 }
+
 </script>
 
 <template>
@@ -65,11 +122,11 @@ const isOptionSelected = (option: SelectOption) => {
         <button type="button" :tabindex="0" @click="open = !open"
             class="relative w-full cursor-pointer min-h-[2em] rounded-md bg-[#1c1b24] py-2 px-3.5 text-left text-gray-400 shadow-sm ring-0 ring-inset ring-gray-300  sm:text-sm sm:leading-6"
             aria-haspopup="listbox" :aria-expanded="open">
-            <template v-if="multiple">
-                <div class="flex flex-wrap gap-2" v-if="(props.value as SelectOption[]).length > 0">
-                    <PublicSelectBadge @remove-option="removeOption(index)" v-for="(value, index) of (props.value as SelectOption[])"
+            <template v-if="props.multiple">
+                <div class="flex flex-wrap gap-2" v-if="sOptions.length > 0">
+                    <PublicSelectBadge @remove-option="removeOption(index)" v-for="(value, index) of sOptions"
                         :key="value.value">
-                        {{ value.name }}
+                        {{ value.value }}
                     </PublicSelectBadge>
                 </div>
                 <span v-else class="text-xs text-gray-500">
@@ -79,7 +136,7 @@ const isOptionSelected = (option: SelectOption) => {
 
             <template v-else>
                 <span v-if="props.value">
-                    {{ (props.value as SelectOption).name}}
+                    {{ props.value }}
                 </span>
                 <span v-else class="text-xs text-gray-500">
                     Choose {{ label }}
@@ -100,13 +157,13 @@ const isOptionSelected = (option: SelectOption) => {
             <li @click="$event => {
                 open = true
                 $event.stopPropagation()
-                selectOption(option)
+                handleToggleByOption(option)
             }" v-for="(option, index) of options" :key="option.value"
-                class="relative cursor-pointer select-none py-2 px-3"
                 :class="[isOptionSelected(option) ? 'bg-yellow-300 text-white' : '']" :id="`listbox-option-${index}`"
-                role="option">
-                {{ option.name }}
+                class="relative cursor-pointer select-none py-2 px-3" role="option">
+                {{ option.label }}
             </li>
         </ul>
     </div>
 </template>
+
