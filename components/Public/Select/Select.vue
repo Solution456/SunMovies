@@ -34,28 +34,33 @@ const props = withDefaults(defineProps<SelectProps>(), {
 })
 const emit = defineEmits<emitProps>()
 
+
+
+
 const open = ref(false)
 const sOptions = ref<SelectOption[]>([])
 const emptyArray: SelectOption[] = []
 
+// const getMergedOptions = (values: ValueAtom[]) => {
+//     const options: SelectOption[] = []
+//     values.forEach((value) => {
+//         if(mapValOpt.has(value)){
+//             options.push(mapValOpt.get(value)!)
+//         }
+//     })
+// }
 
+// const createValMap = (options: SelectOption[]) => {
+//     const mapOptions = new Map<string | number, SelectBaseOption>()
 
-// const selectedOptionsRef = computed(() => {
-//     if (props.multiple) {
-//         const { value: values } = mergedValueRef
-//         if (!Array.isArray(values)) return []
-//         return getMergedOptions(values)
-//     }
-//     return null
-// })
-// const selectedOptionRef = computed<SelectOption | null>(() => {
-//     const { value: mergedValue } = mergedValueRef
-//     if (!props.multiple && !Array.isArray(mergedValue)) {
-//         if (mergedValue === null) return null
-//         return getMergedOptions([mergedValue])[0] || null
-//     }
-//     return null
-// })
+//     options.forEach((option) => {
+//         mapOptions.set(
+//             option['value'],
+//             option
+//         )
+//     })
+//     return mapOptions
+// }
 
 const handleToggleByOption = (option: SelectOption) => {
 
@@ -126,7 +131,7 @@ const isOptionSelected = (option: SelectOption) => {
                 <div class="flex flex-wrap gap-2" v-if="sOptions.length > 0">
                     <PublicSelectBadge @remove-option="removeOption(index)" v-for="(value, index) of sOptions"
                         :key="value.value">
-                        {{ value.value }}
+                        {{ value.label }}
                     </PublicSelectBadge>
                 </div>
                 <span v-else class="text-xs text-gray-500">
