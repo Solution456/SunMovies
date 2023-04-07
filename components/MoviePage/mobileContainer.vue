@@ -12,7 +12,6 @@ const props = defineProps<{
 }>()
 
 const torrents = ref<TorrentInfo[]>([])
-const video = ref<TorrentFile>()
 const showTorrentList = ref(false)
 const modal = ref<InstanceType<typeof PublicModal> | null>(null)
 
@@ -80,7 +79,7 @@ const clickHandle = async (item: Media) => {
                         </template>
                         <template #body>
                             <div class="p-4">
-                                <MoviePageTorrent v-if="torrents.length > 0 || showTorrentList" :torrents="torrents" />
+                                <MoviePageTorrent :typeMedia="props.type" v-if="torrents.length > 0 || showTorrentList" :torrents="torrents" />
                             </div>
                         </template>
                     </PublicModal>

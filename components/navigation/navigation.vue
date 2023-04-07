@@ -58,7 +58,7 @@ onMounted(() => {
 <template>
     <header class="navigation fixed overflow-hidden w-full z-[120] left-0 top-0 mx-auto transition-[height,background-color] ease-linear duration-200"
         :class="[{ 'bg-black/90 shadow-md': AnimateHeader || isOpen}, isOpen?'h-auto':'h-14' ]">
-        <div class="page_header w-full h-full  sm:max-w-[85%] relative sm:mx-auto">
+        <div class="page_header w-full h-full sm:max-w-[1076px] relative sm:mx-auto">
 
 
             <nav class="flex h-full items-center flex-wrap justify-between">

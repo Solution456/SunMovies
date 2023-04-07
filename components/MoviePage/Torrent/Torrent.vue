@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import DocumentIcon from '@heroicons/vue/24/outline/DocumentIcon'
-import { TorrentInfo } from '~~/types';
+
+import type { MediaType, TorrentInfo } from '~~/types';
 
 interface TorrentProps {
     torrents: TorrentInfo[]
+    typeMedia: MediaType
 }
 
 const props = defineProps<TorrentProps>()
+
+const router = useRouter()
+
+
 
 
 </script>
@@ -31,7 +37,7 @@ const props = defineProps<TorrentProps>()
                         }}</a>
                     </div>
                     <div class="torrent_item__button mt-4">
-                        <PublicBaseButton size="sm">Смотерть</PublicBaseButton>
+                        <PublicBaseButton @click="router.push(`/${props.typeMedia}/play/${torrent.magnet}`)" size="sm">Смотерть</PublicBaseButton>
                     </div>
                 </div>
             </li>

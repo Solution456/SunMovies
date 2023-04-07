@@ -19,7 +19,7 @@ export default defineNuxtConfig({
     routeRules: {
       '' : {cors:true},
       '/**': isDev ? {} : { cache: { swr: true, maxAge: 120, staleMaxAge: 60, headersOnly: true } },
-      '/videoplayer/**': {ssr: false}
+      '/[type]/play/**': {ssr: false}
     },
 
     components: true,

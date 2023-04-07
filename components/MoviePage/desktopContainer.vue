@@ -75,7 +75,7 @@ const clickHandle = async (item:Media) => {
                                     :photo="credit.profile_path" />
                             </div>
                             <MoviePageRecommendationsMovies :items="recommendations" :type="props.type"/>
-                            <MoviePageTorrent v-if="torrents.length > 0 || showTorrentList" :torrents="torrents"/>
+                            <MoviePageTorrent :typeMedia="props.type" v-if="torrents.length > 0 || showTorrentList" :torrents="torrents"/>
                         </div>
                         <div class="right">
                             <div class="raiting flex items-center gap-2">

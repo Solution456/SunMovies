@@ -13,3 +13,6 @@ export const addTorrent = (magnet:string):Promise<Torrent[]> =>  {
     return fetch(`torrent/torrent/add/${magnet}`)
 }
 
+export const removeTorrent = (magnet:string) => {
+    return fetch(`torrent/torrent/remove/${magnet}`)
+}

@@ -127,7 +127,7 @@ const PlayPause = () => {
 
 
 <template>
-    <div ref="container" class="videoPlayer relative max-w-4xl w-[98%]">
+    <div ref="container" class="videoPlayer  relative max-w-4xl w-[98%] m-auto">
         <div class="wrapper z-10 absolute left-0 right-0 bottom-0">
             <div ref="videoTimeline" @click="videoTimelineHandler" class="video-timeline h-2 w-full cursor-pointer">
                 <div class="progress-area h-1 bg-slate-50">
