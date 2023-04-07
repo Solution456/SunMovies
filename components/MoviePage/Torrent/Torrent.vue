@@ -20,18 +20,18 @@ const props = defineProps<TorrentProps>()
         </div>
         <ul v-if="torrents.length > 0" class="torrent_list mt-2">
             <li v-for="torrent of props.torrents" :key="torrent.magnet"
-                class="torrent_item flex items-center px-4 py-2 gap-2 hover:bg-opacity-10 hover:bg-gray-300 transition rounded-md cursor-pointer border-b border-b-gray-300 border-dashed">
+                class="torrent_item flex items-center overflow-hidden px-4 py-2 gap-2 hover:bg-opacity-10 hover:bg-gray-300 transition rounded-md cursor-pointer border-b border-b-gray-300 border-dashed">
                 <div class="torrent_item__icon">
                     <DocumentIcon class="w-8 h-8 text-yellow-300" />
                 </div>
-                <div class="torrent_item__body w-full  flex items-center justify-between">
+                <div class="torrent_item__body w-full  flex flex-wrap items-center justify-between">
                     <div class="torrent_item__text">
-                        <p class="font-medium text-lg"> {{ torrent.title }}</p>
-                        <a :href="torrent.torrentUrl" target="_blank" class="font-light text-sm"> {{ torrent.torrentUrl
+                        <p class="font-medium text-sm xs:text-lg "> {{ torrent.title }}</p>
+                        <a :href="torrent.torrentUrl" target="_blank" class="font-light text-xs xs:text-sm"> {{ torrent.torrentUrl
                         }}</a>
                     </div>
-                    <div class="torrent_item__button">
-                        <PublicBaseButton>Смотерть</PublicBaseButton>
+                    <div class="torrent_item__button mt-4">
+                        <PublicBaseButton size="sm">Смотерть</PublicBaseButton>
                     </div>
                 </div>
             </li>

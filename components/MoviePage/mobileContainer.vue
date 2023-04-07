@@ -1,18 +1,20 @@
 <script setup lang="ts">
+import PublicModal from '~~/components/Public/Modal/Modal.vue';
+
 import type { Media, MediaType, TorrentFile, TorrentInfo } from '~~/types';
 
 
 const props = defineProps<{
-    id:string,
-    item:Media
-    recommendations:Media[]
-    type:MediaType
+    id: string,
+    item: Media
+    recommendations: Media[]
+    type: MediaType
 }>()
 
 const torrents = ref<TorrentInfo[]>([])
 const video = ref<TorrentFile>()
 const showTorrentList = ref(false)
-
+const modal = ref<InstanceType<typeof PublicModal> | null>(null)
 
 
 const creditsList = computed(() => {
@@ -20,11 +22,11 @@ const creditsList = computed(() => {
 })
 
 
-const clickHandle = async (item:Media) => {
-   console.log(item.release_date?.split('-')[0] || item.first_air_date)
-   const data = await getTorrentList(`${item.original_title || item.name} ${(item.release_date || item.first_air_date)?.split('-')[0]} AAC`)
-   torrents.value = data
-   showTorrentList.value = !showTorrentList.value
+const clickHandle = async (item: Media) => {
+    const data = await getTorrentList(`${item.original_title || item.name} ${(item.release_date || item.first_air_date)?.split('-')[0]} AAC`)
+    torrents.value = data
+    modal.value?.openClose()
+    showTorrentList.value = !showTorrentList.value
 
 }
 
@@ -42,16 +44,17 @@ const clickHandle = async (item:Media) => {
         <div class="movie_bg__fade absolute w-full h-[300vw] z-0"></div>
 
         <div class="movie__titles px-4 pb-3 pt-[calc(100vw-100px)] relative">
-            <div class="movie_title text-lg font-semibold font-oswald">{{ props.item.title || props.item.name}}</div>
+            <div class="movie_title text-lg font-semibold font-oswald">{{ props.item.title || props.item.name }}</div>
             <div class="movie__other mt-2 text-sm text-gray-300 font-light">
-                <span class="text-yellow-300">{{ props.item.release_date || props.item.first_air_date }}</span> / {{ props.item.status }}
+                <span class="text-yellow-300">{{ props.item.release_date || props.item.first_air_date }}</span> / {{
+                    props.item.status }}
             </div>
         </div>
 
         <div class="movie__content relative min-h-screen rounded-t-2xl bg-bgColor ">
             <div class="movie__content__wrapper px-4 py-2 ">
                 <div class="my-2">
-                    <MoviePageButtonPlay @click="" />
+                    <MoviePageButtonPlay @click="clickHandle(props.item)" />
                 </div>
                 <div class="movie__information">
                     <PublicRaitingStars :raiting="props.item.vote_average" />
@@ -71,6 +74,16 @@ const clickHandle = async (item:Media) => {
                             :id="credit.id" :name="credit.name" :photo="credit.profile_path" />
                     </div>
                     <MoviePageRecommendationsMovies :items="props.recommendations" :type="props.type" />
+                    <PublicModal fullscreen ref="modal">
+                        <template #header>
+                            Torrents
+                        </template>
+                        <template #body>
+                            <div class="p-4">
+                                <MoviePageTorrent v-if="torrents.length > 0 || showTorrentList" :torrents="torrents" />
+                            </div>
+                        </template>
+                    </PublicModal>
                 </div>
             </div>
         </div>
