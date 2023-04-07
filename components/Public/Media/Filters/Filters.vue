@@ -87,7 +87,7 @@ const searchRedirect = () => {
 <template>
     <div class="media-filters grid w-full">
         <PublicSelect :label="`Genre`" v-model:value="form.selectedGenres" multiple :options="genresComp" />
-        <PublicSelect multiple :options="typeOptions" :label="`Type`" v-model:value="form.selectedType" />
+        <PublicSelect :options="typeOptions" :label="`Type`" v-model:value="form.selectedType" />
         <PublicFromToInput @update-values="setSelectedYears" :values="form.year" Label="Years" />
         <div class="media-filters__action mt-4">
             <PublicBaseButton @click="searchRedirect" size="sm">Search</PublicBaseButton>

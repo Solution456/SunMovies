@@ -35,32 +35,44 @@ const props = withDefaults(defineProps<SelectProps>(), {
 const emit = defineEmits<emitProps>()
 
 
+const createValMap = (options: SelectOption[]) => {
+    const mapOptions = new Map<string | number, SelectBaseOption>()
 
+    options.forEach((option) => {
+        mapOptions.set(
+            option['value'],
+            option
+        )
+    })
+    return mapOptions
+}
 
 const open = ref(false)
 const sOptions = ref<SelectOption[]>([])
 const emptyArray: SelectOption[] = []
+const mapValOpt = createValMap(props.options)
 
-// const getMergedOptions = (values: ValueAtom[]) => {
-//     const options: SelectOption[] = []
-//     values.forEach((value) => {
-//         if(mapValOpt.has(value)){
-//             options.push(mapValOpt.get(value)!)
-//         }
-//     })
-// }
+const getMergedOptions = (values: ValueAtom[]) => {
+    const options: SelectOption[] = []
 
-// const createValMap = (options: SelectOption[]) => {
-//     const mapOptions = new Map<string | number, SelectBaseOption>()
+    values.forEach((value) => {
+        if (mapValOpt.has(value)) {
+            options.push(mapValOpt.get(value)!)
+        }
+    })
 
-//     options.forEach((option) => {
-//         mapOptions.set(
-//             option['value'],
-//             option
-//         )
-//     })
-//     return mapOptions
-// }
+
+    return options
+}
+
+
+const selectOption = computed(() => {
+    if (!props.multiple) {
+        if (props.value === null) return null
+        return getMergedOptions([props.value as ValueAtom])[0] || null
+    }
+})
+
 
 const handleToggleByOption = (option: SelectOption) => {
 
@@ -141,7 +153,7 @@ const isOptionSelected = (option: SelectOption) => {
 
             <template v-else>
                 <span v-if="props.value">
-                    {{ props.value }}
+                    {{ selectOption?.label }}
                 </span>
                 <span v-else class="text-xs text-gray-500">
                     Choose {{ label }}
@@ -164,8 +176,8 @@ const isOptionSelected = (option: SelectOption) => {
                 $event.stopPropagation()
                 handleToggleByOption(option)
             }" v-for="(option, index) of options" :key="option.value"
-                :class="[isOptionSelected(option) ? 'bg-yellow-300 text-white' : '']" :id="`listbox-option-${index}`"
-                class="relative cursor-pointer select-none py-2 px-3" role="option">
+                :class="[isOptionSelected(option) ? 'bg-yellow-300 text-white rounded-md' : '']"
+                :id="`listbox-option-${index}`" class="relative cursor-pointer select-none py-2 px-3" role="option">
                 {{ option.label }}
             </li>
         </ul>
