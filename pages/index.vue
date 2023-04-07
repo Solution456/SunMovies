@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import PublicModal from '~~/components/Public/Modal/Modal.vue';
 
 import { QUERY_LIST } from '~~/constants/lists';
 
@@ -22,18 +21,12 @@ const trending = await getTrending(typeMedia.value)
 const genres = await getGenreList(typeMedia.value)
 
 const FavouriteGenresList = ref<string[]>([])
-const modal = ref<InstanceType<typeof PublicModal> | null>(null)
-
 
 const handleEmit = (value: string[]) => {
     FavouriteGenresList.value = value
 }
 
 
-
-const openModal = () => {
-    modal.value?.openClose()
-}
 
 </script>
 
@@ -57,15 +50,5 @@ const openModal = () => {
                 </div>
             </div>
         </div>
-        <PublicModal :fullscreen="false" ref="modal">
-            <template #header>
-                Header Modalki
-            </template>
-            <template #body>
-                <div class="p-6">
-                    BODY
-                </div>
-            </template>
-        </PublicModal>
     </NuxtLayout>
 </template>
