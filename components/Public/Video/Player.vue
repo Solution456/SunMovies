@@ -30,7 +30,7 @@ const VideoDuration = ref('00:00')
 
 
 // Utils
-const formatTime = (time:number) => {
+const formatTime = (time: number) => {
     let seconds: string | number = Math.floor(time % 60)
     let minutes: string | number = Math.floor(time / 60) % 60
     let hours: string | number = Math.floor(time / 3600)
@@ -39,7 +39,7 @@ const formatTime = (time:number) => {
     minutes = +minutes < 10 ? `0${minutes}` : minutes
     hours = +hours < 10 ? `0${hours}` : hours
 
-    if(hours == 0){
+    if (hours == 0) {
         return `${minutes}:${seconds}`
     }
     return `${hours}:${minutes}:${seconds}`
@@ -63,41 +63,41 @@ const loadedDataHandler = (e: any) => {
 
 const videoTimelineHandler = (e: any) => {
     const timelineWidth = (videoTimeline.value as HTMLDivElement).clientWidth
-    if(VideoPlayer.value)
+    if (VideoPlayer.value)
         VideoPlayer.value.currentTime = (e.offsetX / timelineWidth) * VideoPlayer.value.duration
 }
 
 const volumeHandler = () => {
     muteVolume.value = !muteVolume.value
     if (VideoPlayer.value)
-        if (!muteVolume.value){
+        if (!muteVolume.value) {
             VideoPlayer.value.volume = 0.5
-        }   
-        else{
+        }
+        else {
             VideoPlayer.value.volume = 0
         }
-        if(VideoPlayer.value && volumeSlider.value)
-            volumeSlider.value.valueAsNumber = VideoPlayer.value.volume 
-            
+    if (VideoPlayer.value && volumeSlider.value)
+        volumeSlider.value.valueAsNumber = VideoPlayer.value.volume
+
 }
 
 const VolumeSliderHandler = (event: Event) => {
     if (VideoPlayer.value)
-        VideoPlayer.value.volume = +(event.target as HTMLInputElement).value 
-        if(+(event.target as HTMLInputElement).value === 0)
-            muteVolume.value = true
-        else
-            muteVolume.value = false
+        VideoPlayer.value.volume = +(event.target as HTMLInputElement).value
+    if (+(event.target as HTMLInputElement).value === 0)
+        muteVolume.value = true
+    else
+        muteVolume.value = false
 }
 
 const fullscreenHandler = () => {
-    console.log(VideoPlayer)
-    // fullscreen.value = !fullscreen.value
-    if(document.fullscreenElement){
+
+    if (document.fullscreenElement) {
         return document.exitFullscreen()
     }
+    fullscreen.value = !fullscreen.value
     container.value?.requestFullscreen()
-    
+
 }
 
 const skipBackward = () => {
@@ -127,7 +127,8 @@ const PlayPause = () => {
 
 
 <template>
-    <div ref="container" class="videoPlayer  relative max-w-4xl w-[98%] m-auto">
+    <div ref="container" class="videoPlayer aspect-video relative max-w-4xl w-[98%] m-auto"
+        :class="[{ '!max-w-full !w-full': fullscreen }]">
         <div class="wrapper z-10 absolute left-0 right-0 bottom-0">
             <div ref="videoTimeline" @click="videoTimelineHandler" class="video-timeline h-2 w-full cursor-pointer">
                 <div class="progress-area h-1 bg-slate-50">
@@ -141,7 +142,8 @@ const PlayPause = () => {
                         <SpeakerwaveIcon v-if="!muteVolume" />
                         <SpeakerXMarkIcon v-else\ />
                     </button>
-                    <input ref="volumeSlider" class="h-1 max-w-[75px]" @input="VolumeSliderHandler" type="range" min="0" max="1" step="any">
+                    <input ref="volumeSlider" class="h-1 max-w-[75px]" @input="VolumeSliderHandler" type="range" min="0"
+                        max="1" step="any">
                     <div class="video-timer flex items-center justify-center text-xs ml-3">
                         <p class="current-time">{{ currentVideoTime }}</p>
                         <p class="separator">/</p>
@@ -168,7 +170,7 @@ const PlayPause = () => {
 
             </ul>
         </div>
-        <video @loadeddata="loadedDataHandler" @timeupdate="timeUpdateHandle" ref="VideoPlayer"  class="w-full"
+        <video @loadeddata="loadedDataHandler" @timeupdate="timeUpdateHandle" ref="VideoPlayer" class="w-full h-full"
             :src="props.Source"></video>
     </div>
 </template>
