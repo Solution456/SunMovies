@@ -56,3 +56,11 @@ export const useInterval = (
     }
     
 }
+
+export const _scrollTo = (y:number) => {
+  console.log(y)
+  window.scrollTo({
+      top:y,
+      behavior:'smooth'
+  })
+}

@@ -25,13 +25,7 @@ const creditsList = computed(() => {
     return props.item.credits?.cast.slice(0, 4)
 })
 
-const scrollTo = (y:number) => {
-    console.log(y)
-    window.scrollTo({
-        top:y,
-        behavior:'smooth'
-    })
-}
+
 
 
 const clickHandle = async (item: Media) => {
@@ -43,7 +37,7 @@ const clickHandle = async (item: Media) => {
 
 watch(torrentRef, (newVal) => {
    if(newVal){
-    scrollTo(newVal.top)
+    _scrollTo(newVal.top)
    }
 })
 
