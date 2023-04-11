@@ -40,7 +40,7 @@ const fadeColor = 'rgb(10, 10, 10)'
                 <div class="banner_content_raiting">
                     <PublicRaitingStars :raiting="item.vote_average" />
                 </div>
-                <div class="banner_content__overview hidden xs:block text-sm mt-4">
+                <div class="banner_content__overview hidden md:block text-sm mt-4">
                     {{ props.item.overview }}
                 </div>
             </div>
