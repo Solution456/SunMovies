@@ -1,7 +1,5 @@
 <script setup lang="ts">
 
-import './ImageContainer.css'
-
 interface imageProps{
     width:string
     height?:string 
@@ -30,3 +28,23 @@ const props = withDefaults(defineProps<imageProps>(), {
         </div>
     </div>
 </template>
+
+<style scoped>
+.movie-image__image{
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-position: center center;
+}
+
+.movie-image{
+    display: flex;
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+}
+</style>
