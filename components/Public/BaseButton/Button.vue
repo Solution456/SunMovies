@@ -33,7 +33,7 @@ withDefaults(defineProps<buttonProps>(), {
             'rounded-md w-full':!icon
         }
     ]" :disabled="loading">
-        <div v-if="!loading">
+        <div class="flex items-center" v-if="!loading">
             <slot name="start-icon"></slot>
 
             <div
