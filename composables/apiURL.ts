@@ -1,5 +1,5 @@
 const url = 'http://imagetmdb.com/'
-const apiUrl = 'http://localhost:7000/'
+const apiUrl = 'https://sun-movies-api.vercel.app/'
 
 
 

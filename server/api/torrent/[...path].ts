@@ -1,6 +1,6 @@
 import { ofetch } from "ofetch";
 
-const API_URL = 'http://localhost:7000'
+const API_URL = 'https://sun-movies-api.vercel.app/'
 
 
 export default defineEventHandler ( async (event) => {
