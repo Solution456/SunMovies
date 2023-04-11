@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import PlayIcon from '@heroicons/vue/24/solid/PlayIcon';
+
 import PublicModal from '~~/components/Public/Modal/Modal.vue';
 
 import type { Media, MediaType, TorrentFile, TorrentInfo } from '~~/types';
@@ -53,7 +55,12 @@ const clickHandle = async (item: Media) => {
         <div class="movie__content relative min-h-screen rounded-t-2xl bg-bgColor ">
             <div class="movie__content__wrapper px-4 py-2 ">
                 <div class="my-2">
-                    <MoviePageButtonPlay @click="clickHandle(props.item)" />
+                    <PublicBaseButton @click="clickHandle(props.item)">
+                            <template #start-icon>
+                                <PlayIcon class="w-5 h-5" />
+                            </template>
+                            Play
+                        </PublicBaseButton>
                 </div>
                 <div class="movie__information">
                     <PublicRaitingStars :raiting="props.item.vote_average" />

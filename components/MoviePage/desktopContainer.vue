@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import StarIcon from '@heroicons/vue/24/solid/StarIcon'
 import PlayIcon from '@heroicons/vue/24/solid/PlayIcon';
+
 import MoviePageTorrent from '@/components/MoviePage/Torrent/Torrent.vue';
 
 
