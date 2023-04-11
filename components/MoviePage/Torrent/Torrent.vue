@@ -12,6 +12,20 @@ const props = defineProps<TorrentProps>()
 
 const router = useRouter()
 
+const el = ref<HTMLDivElement | null>(null)
+const top = ref(0)
+
+
+
+defineExpose({
+    top
+})
+
+onMounted(() => {
+    top.value = el.value?.getBoundingClientRect().top as number
+})
+
+
 
 
 
@@ -20,7 +34,7 @@ const router = useRouter()
 
 
 <template>
-    <div id="torrent" class="torrent my-10">
+    <div id="torrent" ref="el" class="torrent my-10">
         <div class="torrent__count">
             Found <span class="text-yellow-300">{{ torrents.length }}</span> torrent/s
         </div>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StarIcon from '@heroicons/vue/24/solid/StarIcon'
 import PlayIcon from '@heroicons/vue/24/solid/PlayIcon';
-
+import MoviePageTorrent from '@/components/MoviePage/Torrent/Torrent.vue';
 
 
 import type { Media, MediaType, TorrentFile, TorrentInfo } from '~~/types';
@@ -17,12 +17,21 @@ const props = defineProps<{
 const torrents = ref<TorrentInfo[]>([])
 const video = ref<TorrentFile>()
 const showTorrentList = ref(false)
+const torrentRef = ref<InstanceType<typeof MoviePageTorrent> | null>(null)
 
 
 
 const creditsList = computed(() => {
     return props.item.credits?.cast.slice(0, 4)
 })
+
+const scrollTo = (y:number) => {
+    console.log(y)
+    window.scrollTo({
+        top:y,
+        behavior:'smooth'
+    })
+}
 
 
 const clickHandle = async (item: Media) => {
@@ -32,11 +41,17 @@ const clickHandle = async (item: Media) => {
 
 }
 
+watch(torrentRef, (newVal) => {
+   if(newVal){
+    scrollTo(newVal.top)
+   }
+})
+
 
 
 </script>
 
-
+ 
 <template>
     <div class="movie relative max-w-full flex flex-col md:w-full md:block  h-full ">
         <div :style="`background-image:url(${apiURL.originalImage(props.item.backdrop_path)})`"
@@ -82,7 +97,7 @@ const clickHandle = async (item: Media) => {
                                     :photo="credit.profile_path" />
                             </div>
                             <MoviePageRecommendationsMovies :items="recommendations" :type="props.type" />
-                            <MoviePageTorrent :typeMedia="props.type" v-if="torrents.length > 0 || showTorrentList"
+                            <MoviePageTorrent ref="torrentRef" :typeMedia="props.type" v-if="torrents.length > 0 || showTorrentList"
                                 :torrents="torrents" />
                         </div>
                         <div class="right">
