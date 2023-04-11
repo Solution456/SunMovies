@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import StarIcon from '@heroicons/vue/24/solid/StarIcon'
+import PlayIcon from '@heroicons/vue/24/solid/PlayIcon';
+
 
 
 import type { Media, MediaType, TorrentFile, TorrentInfo } from '~~/types';
 
 
 const props = defineProps<{
-    id:string,
-    item:Media
-    recommendations:Media[]
-    type:MediaType
+    id: string,
+    item: Media
+    recommendations: Media[]
+    type: MediaType
 }>()
 
 const torrents = ref<TorrentInfo[]>([])
@@ -23,11 +25,10 @@ const creditsList = computed(() => {
 })
 
 
-const clickHandle = async (item:Media) => {
-   console.log(item.release_date?.split('-')[0] || item.first_air_date)
-   const data = await getTorrentList(`${item.original_title || item.name} ${(item.release_date || item.first_air_date)?.split('-')[0]} AAC`)
-   torrents.value = data
-   showTorrentList.value = !showTorrentList.value
+const clickHandle = async (item: Media) => {
+    const data = await getTorrentList(`${item.original_title || item.name} ${(item.release_date || item.first_air_date)?.split('-')[0]} AAC`)
+    torrents.value = data
+    showTorrentList.value = !showTorrentList.value
 
 }
 
@@ -50,7 +51,12 @@ const clickHandle = async (item:Media) => {
                             :url="apiURL.imageW500(props.item.poster_path)" />
                     </div>
                     <div class="div">
-                        <MoviePageButtonPlay @click="clickHandle(props.item)" />
+                        <PublicBaseButton @click="clickHandle(props.item)">
+                            <template #start-icon>
+                                <PlayIcon class="w-5 h-5" />
+                            </template>
+                            Play
+                        </PublicBaseButton>
                     </div>
                 </div>
 
@@ -60,10 +66,11 @@ const clickHandle = async (item:Media) => {
                     <div class="movie__content__info ml-6">
                         <div class="movie__content__info--left">
                             <div class="movie__other text-sm text-gray-300 font-light">
-                                <span class="text-yellow-300">{{ props.item.release_date || props.item.first_air_date }}</span> / {{ props.item.status }}
+                                <span class="text-yellow-300">{{ props.item.release_date || props.item.first_air_date
+                                }}</span> / {{ props.item.status }}
                             </div>
                             <h2 class=" text-5xl font-medium font-oswald">
-                                {{ props.item.title || props.item.name}}
+                                {{ props.item.title || props.item.name }}
                             </h2>
                             <div class="genres-group flex gap-2 mt-3">
                                 <PublicChip v-for="genre in props.item.genres">{{ genre.name }}</PublicChip>
@@ -74,8 +81,9 @@ const clickHandle = async (item:Media) => {
                                     :charecters="credit.character" :id="credit.id" :name="credit.name"
                                     :photo="credit.profile_path" />
                             </div>
-                            <MoviePageRecommendationsMovies :items="recommendations" :type="props.type"/>
-                            <MoviePageTorrent :typeMedia="props.type" v-if="torrents.length > 0 || showTorrentList" :torrents="torrents"/>
+                            <MoviePageRecommendationsMovies :items="recommendations" :type="props.type" />
+                            <MoviePageTorrent :typeMedia="props.type" v-if="torrents.length > 0 || showTorrentList"
+                                :torrents="torrents" />
                         </div>
                         <div class="right">
                             <div class="raiting flex items-center gap-2">
