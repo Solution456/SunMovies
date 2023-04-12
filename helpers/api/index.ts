@@ -1,8 +1,8 @@
 import { ofetch } from 'ofetch';
 import LRU from 'lru-cache';
 import { hash as ohash } from 'ohash';
-
-const apiBaseUrl = 'https://sun-movie.netlify.app/api';
+const isDev = process.env.NODE_ENV === 'development'
+const apiBaseUrl = isDev? 'http://localhost:3000/api' :'https://sun-movie.netlify.app/api';
 
 const cache = new LRU({
   max: 500,

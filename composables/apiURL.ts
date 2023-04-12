@@ -1,4 +1,4 @@
-const url = 'http://imagetmdb.com/'
+const url = 'https://imagetmdb.com/'
 const apiUrl = 'https://sun-movies-api.vercel.app/'
 
 
