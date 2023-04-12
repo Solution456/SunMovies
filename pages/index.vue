@@ -26,6 +26,9 @@ const handleEmit = (value: string[]) => {
     FavouriteGenresList.value = value
 }
 
+useHead({
+    title: 'SUN',
+})
 
 
 </script>

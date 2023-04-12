@@ -2,7 +2,7 @@ import { ofetch } from 'ofetch';
 import LRU from 'lru-cache';
 import { hash as ohash } from 'ohash';
 
-const apiBaseUrl = 'https://sun-movies.vercel.app/api';
+const apiBaseUrl = 'https://localhost:7000/api';
 
 const cache = new LRU({
   max: 500,
