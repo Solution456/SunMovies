@@ -2,7 +2,7 @@ import { ofetch } from 'ofetch';
 import LRU from 'lru-cache';
 import { hash as ohash } from 'ohash';
 
-const apiBaseUrl = 'https://localhost:7000/api';
+const apiBaseUrl = 'http://localhost:3000/api';
 
 const cache = new LRU({
   max: 500,

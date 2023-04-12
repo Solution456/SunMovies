@@ -5,9 +5,7 @@ export default defineNuxtConfig({
     modules: [
       '@nuxt/image-edge'
     ],
-    nitro: {
-      preset: 'vercel-edge'
-    },
+    
     css: ['~/assets/css/main.css', '~/assets/css/global.css'],
     postcss: {
         plugins: {
